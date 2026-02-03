@@ -1,0 +1,49 @@
+name: CI
+
+# När ska denna workflow köras?
+on:
+  push:
+    branches: [ main, dev ]
+  pull_request:
+    branches: [ main, dev ]
+
+# Jobben som ska köras
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+      # Checka ut koden
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      # Sätt upp Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      # Installera dependencies
+      - name: Install dependencies
+        run: npm ci
+      
+      # Kör linting
+      - name: Run linter
+        run: npm run lint
+      
+      # Kör tester
+      - name: Run tests
+        run: npm test
+      
+      # Kör tester med kodtäckning
+      - name: Run tests with coverage
+        run: npm test -- --coverage
+
+      # Ladda upp coverage till GitHub
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          fail_ci_if_error: false
+        env:
+          token: ${{ secrets.CODECOV_TOKEN }}

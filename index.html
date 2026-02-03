@@ -3,9 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>WebbWizards Todo-App</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/modalstyling.css">
+
 </head>
 <body>
-    
+    <header>
+        <h1>Welcome to WebbWizards Todo-App</h1>
+    </header>
+    <main>
+        <h2>Your Todos</h2>
+        <button id="add-todo-btn">Add Todo</button>
+        <p id="useroutput"></p>
+        <ul id="ulList">
+            <!--Here goes Todos-->
+        </ul>
+        <div id="myModal" class="modal">
+
+          <!-- Modal content -->
+          <div class="modal-content">
+            <span class="close">&times;</span>
+                <input type="text" id="new-todo-input" placeholder="Enter new todo">
+                <button id="save-todo-btn">Save Todo</button>
+          </div>
+      
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2026 WebbWizards</p>
+    </footer>
+    <script src="script.js"></script>
 </body>
 </html>

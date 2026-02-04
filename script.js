@@ -26,7 +26,6 @@ function init() {
 
 //Open Add Todo Modal
 addbtn.addEventListener('click', function() {
-    const todoText = inputfield.value.trim();
     modaltitle.innerHTML = "Add Todo";
     modal.style.display = "flex";
 });
@@ -147,7 +146,6 @@ function EditTodo(li, todoText, description)
     console.log(li);
     //Removes the current todo and places its text in the input field for editing
     modaltitle.innerHTML = "Edit Todo";
-    const textSpan = li.querySelector('span');
     modal.style.display = "flex";
     inputfield.value = todoText;
     descfield.value = description;

@@ -1,3 +1,28 @@
+/* Remove button for modal */
+.modal-removebtn {
+  background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+  color: white;
+  margin-top: 1rem;
+  border: none;
+  border-radius: 12px;
+  padding: 1rem 2.5rem;
+  width: 100%;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(231, 76, 60, 0.2);
+  transition: all 0.3s ease;
+}
+
+.modal-removebtn:hover {
+  background: linear-gradient(135deg, #c0392b 0%, #e74c3c 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(231, 76, 60, 0.3);
+}
+
+.modal-removebtn:active {
+  transform: translateY(0);
+}
 /* The Modal (background) */
 .modal {
   display: none; /* Hidden by default */

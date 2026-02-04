@@ -4,9 +4,26 @@ const todolist = document.getElementById('ulList');
 const useroutput = document.getElementById('useroutput');
 const modal = document.getElementById("myModal");
 const span = document.getElementsByClassName("close")[0];
+
 const savebtn = document.getElementById('save-todo-btn');
+const removebtn = document.getElementById('remove-todo-btn');
+
+// Track the currently edited todo element
+let editingTodoElement = null;
 
 const todos = [];
+
+// Remove todo when clicking remove button in modal
+removebtn.addEventListener('click', function() {
+    if (editingTodoElement) {
+        const textSpan = editingTodoElement.querySelector('span');
+        const todoText = textSpan ? textSpan.textContent : editingTodoElement.textContent.replace('✅', '').replace('✎', '').trim();
+        RemoveTodo(editingTodoElement, todoText);
+        editingTodoElement = null;
+        modal.style.display = "none";
+        removebtn.style.display = 'none';
+    }
+});
 
 //initialize and add all todos from localStorage
 function init() {
@@ -20,17 +37,11 @@ function init() {
 
 //Open Add Todo Modal
 addbtn.addEventListener('click', function() {
-    const todoText = inputfield.value.trim();
-
-    modal.style.display = "block"
-});
-//Save Todo from Modal
-savebtn.addEventListener('click', function() {
-    const todoText = inputfield.value.trim();
-    if (todoText !== '') {
-        AddTodo(todoText);
-        modal.style.display = "none";
-    }
+    inputfield.value = '';
+    modal.style.display = "block";
+    removebtn.style.display = 'none';
+    editingTodoElement = null;
+    inputfield.focus();
 });
 //Close Modal
 span.onclick = function() {
@@ -42,6 +53,34 @@ window.onclick = function(event) {
     modal.style.display = "none";
   }
 }
+
+//Save Todo from Modal
+savebtn.addEventListener('click', function() {
+    const todoText = inputfield.value.trim();
+    if (todoText !== '') {
+        if (editingTodoElement) {
+            // Edit mode: update the existing todo
+            const textSpan = editingTodoElement.querySelector('span');
+            if (textSpan) {
+                // Update text in UI
+                textSpan.textContent = todoText;
+                // Update in todos array and localStorage
+                const oldText = editingTodoElement.dataset.oldText || textSpan.textContent;
+                const todoIndex = todos.findIndex(t => t.text === oldText);
+                if (todoIndex !== -1) {
+                    todos[todoIndex].text = todoText;
+                    localStorage.setItem('todos', JSON.stringify(todos));
+                }
+            }
+            editingTodoElement = null;
+        } else {
+            // Add mode: add new todo
+            AddTodo(todoText);
+        }
+        modal.style.display = "none";
+        removebtn.style.display = 'none';
+    }
+});
 
 function AddTodo(todoText, completed = false)
 {
@@ -93,16 +132,16 @@ function AddTodo(todoText, completed = false)
     inputfield.value = '';
 }
 
-function EditTodo(li)
-{
-    //Removes the current todo and places its text in the input field for editing
+function EditTodo(li) {
     const textSpan = li.querySelector('span');
     const todoText = textSpan ? textSpan.textContent : li.textContent.replace('✅', '').replace('✎', '').trim();
-    modal.style.display = "block"
+    modal.style.display = "block";
+    removebtn.style.display = 'block';
     inputfield.value = todoText;
     inputfield.focus();
-    
-    RemoveTodo(li, todoText);
+    editingTodoElement = li;
+    // Store the old text for reference when saving
+    editingTodoElement.dataset.oldText = todoText;
 }
 
 function RemoveTodo(li, todoText)

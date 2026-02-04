@@ -3,9 +3,11 @@
 body {
     display: grid;
     grid-template-rows: auto auto 1fr auto auto;
-    height: 100vh;
+    min-height: 100vh;     
     gap: 1rem;
-    padding: 1rem; 
+    padding: 1rem;
+    box-sizing: border-box; 
+    overflow-x: hidden;       
 }
 
 header, footer {
@@ -13,6 +15,7 @@ header, footer {
     border-radius: 5px;
     display: flex;
     justify-content: center;
+    padding: 0.75rem;   
 }
 
 .button-and-output {
@@ -24,7 +27,9 @@ header, footer {
 
 #add-todo-btn {
     margin-bottom: 0.5rem;
-    padding: 0.5rem 1rem;
+    padding: 0.75rem 1.25rem; 
+    min-height: 44px;         
+    min-width: 44px;
     font-size: 1rem;
     border: none;
     border-radius: 20px;
@@ -40,22 +45,24 @@ header, footer {
 main {
     padding: 1rem;
     overflow-y: auto;
-    border: 1px solid #ccc; 
+    border: 1px solid #ccc;
     border-radius: 5px;
     display: flex;
     flex-direction: column;
+    flex: 1;                  
+    box-sizing: border-box;
 }
 
 #ulList {
-    min-height:2rem; 
+    min-height: 2rem;
 }
 
 .important-tasks {
     display: grid;
     grid-template-columns: 1fr;
-    border: 1px solid #ccc; 
+    border: 1px solid #ccc;
     border-radius: 5px;
-     gap: 0.5rem;
+    gap: 0.5rem;
 }
 
 #box-element {
@@ -65,32 +72,35 @@ main {
     border: 1px solid #ddd;
     border-radius: 5px;
 }
+
 footer {
     text-align: center;
     font-size: 0.9rem;
     color: #666;
 }
+
 /* end of base styles */
 
 /* adjustments for tablets */
 @media (min-width: 768px) {
-main {
-    padding-left: 3rem;
-    padding-right: 3rem;
-}
+    main {
+        padding-left: 3rem;
+        padding-right: 3rem;
+    }
 
-.important-tasks {
-    grid-template-columns: 1fr 1fr;
-}
+    .important-tasks {
+        grid-template-columns: 1fr 1fr;
+    }
 }
 
 /* adjustments for desktops */
 @media (min-width: 1024px) {
-main {
-    padding-left: 10rem;
-    padding-right: 10rem;
-}
-.important-tasks {
-    grid-template-columns: 1fr 1fr 1fr;
-}
+    main {
+        padding-left: 10rem;
+        padding-right: 10rem;
+    }
+
+    .important-tasks {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
 }

@@ -5,6 +5,7 @@ const useroutput = document.getElementById('useroutput');
 const modal = document.getElementById("myModal");
 const span = document.getElementsByClassName("close")[0];
 const savebtn = document.getElementById('save-todo-btn');
+const todoError = document.getElementById('todo-error');
 
 const todos = [];
 
@@ -30,6 +31,13 @@ savebtn.addEventListener('click', function() {
     if (todoText !== '') {
         AddTodo(todoText);
         modal.style.display = "none";
+
+        todoError.textContent = '';
+        inputfield.removeAttribute('aria-invalid');
+    } else {
+        todoError.textContent = 'Du måste ange en todo.';
+        inputfield.setAttribute('aria-invalid', 'true');
+        inputfield.focus();
     }
 });
 //Close Modal
@@ -114,5 +122,6 @@ function RemoveTodo(li, todoText)
         localStorage.setItem('todos', JSON.stringify(todos));
     }
 }
+
 
 init();

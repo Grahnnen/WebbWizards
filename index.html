@@ -23,8 +23,12 @@
 
           <!-- Modal content -->
           <div class="modal-content">
-            <span class="close">&times;</span>
-                <input type="text" id="new-todo-input" placeholder="Enter new todo">
+            <span class="close" aria-label="Stäng modal">&times;</span>
+                <label for="new-todo-input">New Todo:</label>
+
+                <input type="text" id="new-todo-input" placeholder="Enter new todo" aria-required="true" aria-describedby="todo-error">
+                <span id="todo-error" class="error-message" aria-live="polite"></span>
+
                 <button id="save-todo-btn">Save Todo</button>
           </div>
       

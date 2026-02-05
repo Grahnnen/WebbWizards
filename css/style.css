@@ -22,16 +22,63 @@ header, footer {
     border-radius: 5px;
 }
 
-#add-todo-btn {
-    margin-bottom: 0.5rem;
-    padding: 0.5rem 1rem;
-    font-size: 1rem;
-    border: none;
-    border-radius: 20px;
-    background-color: #4CAF50;
-    color: white;
-    cursor: pointer;
+/* Center the button on the page */
+.button-and-output {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 2rem 0;
 }
+
+/* Add Todo Button – fixed size */
+#add-todo-btn {
+  width: 64px;          /* 👈 fixed size */
+  height: 64px;         /* 👈 fixed size */
+  border-radius: 50%;
+
+  background: linear-gradient(135deg, #4CAF50, #6fdc8c);
+  color: white;
+  font-size: 2rem;
+  font-weight: 600;
+
+  border: none;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow: 0 10px 28px rgba(76, 175, 80, 0.4);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Hover */
+#add-todo-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 36px rgba(76, 175, 80, 0.45);
+}
+
+/* Active (tap / click) */
+#add-todo-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 6px 18px rgba(76, 175, 80, 0.35);
+}
+
+/* Focus (accessibility) */
+#add-todo-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(76, 175, 80, 0.35);
+}
+
+
+/* Mobile friendly */
+@media (max-width: 480px) {
+  #add-todo-btn {
+    font-size: 0.95rem;
+    padding: 0.7rem 1.4rem;
+  }
+}
+
 
 #useroutput {
    min-height: 1.5rem;
@@ -46,9 +93,112 @@ main {
     flex-direction: column;
 }
 
+/* Todo list container */
 #ulList {
-    min-height:2rem; 
+  list-style: none;
+  padding: 0;
+  margin: 13rem ;
+  max-width: 300px;
+  min-height: 2rem;
+  
 }
+
+/* =========================
+   Todo list container
+   Mobile-first
+   ========================= */
+
+#ulList {
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem auto;      /* 👈 centrerad horisontellt */
+  max-width: 90%;           /* 👈 mobilanpassad bredd */
+  min-height: 2rem;
+}
+
+/* =========================
+   Each todo item
+   ========================= */
+
+#ulList li {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+
+  padding: 0.7rem 0.9rem;
+  margin-bottom: 0.6rem;
+
+  background: #ffffff;
+  border-radius: 14px;
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* =========================
+   Todo text
+   ========================= */
+
+#ulList li span {
+  flex: 1;
+  font-size: 1rem;
+  color: #333;
+  word-break: break-word;
+  text-align: center;
+}
+
+/* =========================
+   All buttons
+   ========================= */
+
+#ulList li button {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+
+  font-size: 1.1rem;
+  padding: 0.3rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+/* Hover & active effects */
+#ulList li button:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+#ulList li button:active {
+  transform: scale(0.9);
+}
+
+/* Edit button (✍) */
+#ulList li button:nth-of-type(2) {
+  color: #ff9800;
+}
+
+/* Delete button (🗑) */
+#ulList li button:nth-of-type(3) {
+  color: #f44336;
+}
+
+/* =========================
+   Desktop enhancement
+   ========================= */
+
+@media (min-width: 768px) {
+  #ulList {
+    max-width: 420px;       /* 👈 snygg bredd på desktop */
+  }
+
+  #ulList li {
+    padding: 0.8rem 1.2rem;
+  }
+}
+
 
 .important-tasks {
     display: grid;

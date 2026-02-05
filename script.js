@@ -4,11 +4,28 @@ const todolist = document.getElementById('ulList');
 const useroutput = document.getElementById('useroutput');
 const modal = document.getElementById("myModal");
 const span = document.getElementsByClassName("close")[0];
+
 const savebtn = document.getElementById('save-todo-btn');
+const removebtn = document.getElementById('remove-todo-btn');
+
+// Track the currently edited todo element
+let editingTodoElement = null;
 const modaltitle = document.getElementById('modal-title');
 const descfield = document.getElementById('new-todo-desc');
 
 let todos = [];
+
+// Remove todo when clicking remove button in modal
+removebtn.addEventListener('click', function() {
+    if (editingTodoElement) {
+        const textSpan = editingTodoElement.querySelector('span');
+        const todoText = textSpan ? textSpan.textContent : editingTodoElement.textContent.replace('✅', '').replace('✎', '').trim();
+        RemoveTodo(editingTodoElement, todoText);
+        editingTodoElement = null;
+        modal.style.display = "none";
+        removebtn.style.display = 'none';
+    }
+});
 
 //initialize and add all todos from localStorage
 function init() {
@@ -27,43 +44,16 @@ function init() {
 
 //Open Add Todo Modal
 addbtn.addEventListener('click', function() {
+    inputfield.value = '';
+    modal.style.display = "block";
+    removebtn.style.display = 'none';
+    editingTodoElement = null;
+    inputfield.focus();
     modaltitle.innerHTML = "Add Todo";
     modal.style.display = "flex";
 });
 //Save Todo from Modal
-savebtn.addEventListener('click', function() {
-    const todoText = inputfield.value.trim();
-    const todoDesc = descfield.value.trim();
-
-    const todoIndex = todos.findIndex(t => t.text === todoText);
-
-    if (todoText !== '' && todoIndex === -1) {
-        AddTodo(todoText, false, todoDesc);
-        todos.push({text: todoText, description: todoDesc, completed: false});
-        localStorage.setItem('todos', JSON.stringify(todos));
-        // clear input field and close modal
-        inputfield.value = "Titel";
-        descfield.value = "Description";
-        modal.style.display = "none";
-        console.log("Todo Added: " + todoText);
-    }
-    else if (todoIndex !== -1) {
-        // Update existing todo
-        todos[todoIndex].description = todoDesc;
-        localStorage.setItem('todos', JSON.stringify(todos));
-        // clear input field and close modal
-        inputfield.value = "Titel";
-        descfield.value = "Description";
-        modal.style.display = "none";
-        useroutput.innerHTML = "<p style='color:green'>Todo was updated!</p>";
-        console.log("Todo updated: " + todoText);
-    }
-    else{
-        alert("Todo cannot be empty or duplicate!");
-    }
-    todolist.innerHTML = '';
-    init();
-});
+// Remove duplicate savebtn event listener and merge logic into one handler below
 //Close Modal
 span.onclick = function() {
      inputfield.value = "";
@@ -79,81 +69,115 @@ window.onclick = function(event) {
   }
 }
 
-function AddTodo(todoText, completed = false, description = "")
-{
-    // Provide feedback to the user
-    useroutput.innerHTML = "<p style='color:green'>Todo was added!</p>";
-    
+//Save Todo from Modal
+savebtn.addEventListener('click', function() {
+    const todoText = inputfield.value.trim();
+    const todoDesc = descfield.value.trim();
+    if (todoText === '') {
+        alert("Todo cannot be empty!");
+        return;
+    }
+    if (editingTodoElement) {
+        // Edit mode: update the existing todo
+        const textSpan = editingTodoElement.querySelector('span');
+        if (textSpan) {
+            // Update text in UI
+            textSpan.textContent = todoText;
+        }
+        // Update in todos array and localStorage
+        const oldText = editingTodoElement.dataset.oldText;
+        const todoIndex = todos.findIndex(t => t.text === oldText);
+        if (todoIndex !== -1) {
+            todos[todoIndex].text = todoText;
+            todos[todoIndex].description = todoDesc;
+            localStorage.setItem('todos', JSON.stringify(todos));
+        }
+        editingTodoElement = null;
+        useroutput.innerHTML = "<p style='color:green'>Todo was updated!</p>";
+    } else {
+        // Add mode: add new todo if not duplicate
+        const todoIndex = todos.findIndex(t => t.text === todoText);
+        if (todoIndex === -1) {
+            AddTodo(todoText, false, todoDesc);
+            todos.push({text: todoText, description: todoDesc, completed: false});
+            localStorage.setItem('todos', JSON.stringify(todos));
+            useroutput.innerHTML = "<p style='color:green'>Todo was added!</p>";
+        } else {
+            alert("Todo cannot be duplicate!");
+            return;
+        }
+    }
+    inputfield.value = '';
+    descfield.value = '';
+    modal.style.display = "none";
+    removebtn.style.display = 'none';
+    todolist.innerHTML = '';
+    init();
+});
+
+
+function AddTodo(todoText, completed = false) {
     // Create list item
     const li = document.createElement('li');
-
     // Set text decoration if completed
     if (completed) {
         li.style.textDecoration = 'line-through';
     }
-
     // Create check button
     var checkBtn = document.createElement('button');
     checkBtn.innerHTML = "&#9989;";
     li.appendChild(checkBtn);
-    
     // Create span for todo text
     const textSpan = document.createElement('span');
     textSpan.textContent = todoText;
     li.appendChild(textSpan);
-
     // Add event listener for check button
     checkBtn.addEventListener('click', function() {
-        // Toggle completion status
         li.style.textDecoration = li.style.textDecoration === 'line-through' ? 'none' : 'line-through';
-        // Update localStorage
         const todoIndex = todos.findIndex(t => t.text === todoText);
         if (todoIndex !== -1) {
             todos[todoIndex].completed = li.style.textDecoration === 'line-through';
             localStorage.setItem('todos', JSON.stringify(todos));
         }
     });
-
     // Create edit button
     var editBtn = document.createElement('button');
     editBtn.innerHTML = "&#9997;";
     li.appendChild(editBtn);
     editBtn.addEventListener('click', function() {
-        EditTodo(li, todoText, description);
+        EditTodo(li);
     });
-
     // Create delete button
     var deleteBtn = document.createElement('button');
     deleteBtn.innerHTML = "&#128465;"; // trash can icon
     li.appendChild(deleteBtn);
-
     deleteBtn.addEventListener('click', function () {
-        // DeleteTodo(li);
         if (confirm("Are you sure you want to delete this todo?")) {
             RemoveTodo(li, todoText);
         }
     });
-
-    
-    // Append to list and update storage
     todolist.appendChild(li);
-    // todos.push({text: todoText, description: description, completed: completed});
-    // localStorage.setItem('todos', JSON.stringify(todos));
     inputfield.value = '';
 }
 
-function EditTodo(li, todoText, description)
-{
-    console.log(li);
-    //Removes the current todo and places its text in the input field for editing
+function EditTodo(li) {
+    const textSpan = li.querySelector('span');
+    const todoText = textSpan ? textSpan.textContent : li.textContent.replace('✅', '').replace('✎', '').trim();
+    // Find the todo in the array to get its description
+    const todoIndex = todos.findIndex(t => t.text === todoText);
+    let todoDesc = '';
+    if (todoIndex !== -1) {
+        todoDesc = todos[todoIndex].description || '';
+    }
+    modal.style.display = "block";
+    removebtn.style.display = 'block';
     modaltitle.innerHTML = "Edit Todo";
     modal.style.display = "flex";
     inputfield.value = todoText;
-    descfield.value = description;
-    
+    descfield.value = todoDesc;
     inputfield.focus();
-    
-    //RemoveTodo(li, todoText);
+    editingTodoElement = li;
+    editingTodoElement.dataset.oldText = todoText;
 }
 
 function RemoveTodo(li, todoText)

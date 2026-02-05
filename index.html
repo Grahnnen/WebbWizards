@@ -12,16 +12,19 @@
     <header>
         <h1>Welcome to WebbWizards Todo-App</h1>
     </header>
+        <section class="button-and-output"> 
+           <button id="add-todo-btn" aria-label="Add new todo">
+       <span class="plus-icon">+</span>
+       </button>
+            <p id="useroutput"></p>
+        </section>
+        
     <main>
-        <h2>Your Todos</h2>
-        <button id="add-todo-btn">Add Todo</button>
-        <p id="useroutput"></p>
+        <h3 id="today-heading">Torsdag 5/2</h3>
         <ul id="ulList">
             <!--Here goes Todos-->
         </ul>
         <div id="myModal" class="modal">
-
-          <!-- Modal content -->
           <div class="modal-content">
             <span class="close" aria-label="Stäng modal">&times;</span>
                 <label for="new-todo-input">New Todo:</label>
@@ -31,9 +34,16 @@
 
                 <button id="save-todo-btn">Save Todo</button>
           </div>
-      
         </div>
+       
     </main>
+
+    <section class="important-tasks">
+        <p id="box-element">Tid hos tandläkaren 25/2</p>
+        <p id="box-element">Utvecklingssamtal skolan 28/2</p>
+        <p id="box-element">Vaccinera hunden 5/3</p>
+    </section>
+
     <footer>
         <p>&copy; 2026 WebbWizards</p>
     </footer>

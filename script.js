@@ -10,8 +10,10 @@ const removebtn = document.getElementById('remove-todo-btn');
 
 // Track the currently edited todo element
 let editingTodoElement = null;
+const modaltitle = document.getElementById('modal-title');
+const descfield = document.getElementById('new-todo-desc');
 
-const todos = [];
+let todos = [];
 
 // Remove todo when clicking remove button in modal
 removebtn.addEventListener('click', function() {
@@ -27,10 +29,15 @@ removebtn.addEventListener('click', function() {
 
 //initialize and add all todos from localStorage
 function init() {
+
+    todolist.innerHTML = '';
     const storedTodos = JSON.parse(localStorage.getItem('todos'));
+    todos = storedTodos || [];
+
+    console.log(storedTodos);
     if (storedTodos) {
         storedTodos.forEach(function(todo) {
-            AddTodo(todo.text, todo.completed);
+            AddTodo(todo.text, todo.completed, todo.description);
         });
     }
 }
@@ -42,14 +49,22 @@ addbtn.addEventListener('click', function() {
     removebtn.style.display = 'none';
     editingTodoElement = null;
     inputfield.focus();
+    modaltitle.innerHTML = "Add Todo";
+    modal.style.display = "flex";
 });
+//Save Todo from Modal
+// Remove duplicate savebtn event listener and merge logic into one handler below
 //Close Modal
 span.onclick = function() {
+     inputfield.value = "";
+    descfield.value = "";
   modal.style.display = "none";
 }
 //Close Modal when clicking outside of it
 window.onclick = function(event) {
   if (event.target == modal) {
+    inputfield.value = "";
+    descfield.value = "";
     modal.style.display = "none";
   }
 }
@@ -57,66 +72,74 @@ window.onclick = function(event) {
 //Save Todo from Modal
 savebtn.addEventListener('click', function() {
     const todoText = inputfield.value.trim();
-    if (todoText !== '') {
-        if (editingTodoElement) {
-            // Edit mode: update the existing todo
-            const textSpan = editingTodoElement.querySelector('span');
-            if (textSpan) {
-                // Update text in UI
-                textSpan.textContent = todoText;
-                // Update in todos array and localStorage
-                const oldText = editingTodoElement.dataset.oldText || textSpan.textContent;
-                const todoIndex = todos.findIndex(t => t.text === oldText);
-                if (todoIndex !== -1) {
-                    todos[todoIndex].text = todoText;
-                    localStorage.setItem('todos', JSON.stringify(todos));
-                }
-            }
-            editingTodoElement = null;
-        } else {
-            // Add mode: add new todo
-            AddTodo(todoText);
-        }
-        modal.style.display = "none";
-        removebtn.style.display = 'none';
+    const todoDesc = descfield.value.trim();
+    if (todoText === '') {
+        alert("Todo cannot be empty!");
+        return;
     }
+    if (editingTodoElement) {
+        // Edit mode: update the existing todo
+        const textSpan = editingTodoElement.querySelector('span');
+        if (textSpan) {
+            // Update text in UI
+            textSpan.textContent = todoText;
+        }
+        // Update in todos array and localStorage
+        const oldText = editingTodoElement.dataset.oldText;
+        const todoIndex = todos.findIndex(t => t.text === oldText);
+        if (todoIndex !== -1) {
+            todos[todoIndex].text = todoText;
+            todos[todoIndex].description = todoDesc;
+            localStorage.setItem('todos', JSON.stringify(todos));
+        }
+        editingTodoElement = null;
+        useroutput.innerHTML = "<p style='color:green'>Todo was updated!</p>";
+    } else {
+        // Add mode: add new todo if not duplicate
+        const todoIndex = todos.findIndex(t => t.text === todoText);
+        if (todoIndex === -1) {
+            AddTodo(todoText, false, todoDesc);
+            todos.push({text: todoText, description: todoDesc, completed: false});
+            localStorage.setItem('todos', JSON.stringify(todos));
+            useroutput.innerHTML = "<p style='color:green'>Todo was added!</p>";
+        } else {
+            alert("Todo cannot be duplicate!");
+            return;
+        }
+    }
+    inputfield.value = '';
+    descfield.value = '';
+    modal.style.display = "none";
+    removebtn.style.display = 'none';
+    todolist.innerHTML = '';
+    init();
 });
 
-function AddTodo(todoText, completed = false)
-{
-    // Provide feedback to the user
-    useroutput.innerHTML = "<p style='color:green'>Todo was added!</p>";
-    
+
+function AddTodo(todoText, completed = false, description = "") {
     // Create list item
     const li = document.createElement('li');
-
     // Set text decoration if completed
     if (completed) {
         li.style.textDecoration = 'line-through';
     }
-
     // Create check button
     var checkBtn = document.createElement('button');
     checkBtn.innerHTML = "&#9989;";
     li.appendChild(checkBtn);
-    
     // Create span for todo text
     const textSpan = document.createElement('span');
     textSpan.textContent = todoText;
     li.appendChild(textSpan);
-
     // Add event listener for check button
     checkBtn.addEventListener('click', function() {
-        // Toggle completion status
         li.style.textDecoration = li.style.textDecoration === 'line-through' ? 'none' : 'line-through';
-        // Update localStorage
         const todoIndex = todos.findIndex(t => t.text === todoText);
         if (todoIndex !== -1) {
             todos[todoIndex].completed = li.style.textDecoration === 'line-through';
             localStorage.setItem('todos', JSON.stringify(todos));
         }
     });
-
     // Create edit button
     var editBtn = document.createElement('button');
     editBtn.innerHTML = "&#9997;";
@@ -124,23 +147,36 @@ function AddTodo(todoText, completed = false)
     editBtn.addEventListener('click', function() {
         EditTodo(li);
     });
-    
-    // Append to list and update storage
+    // Create delete button
+    var deleteBtn = document.createElement('button');
+    deleteBtn.innerHTML = "&#128465;"; // trash can icon
+    li.appendChild(deleteBtn);
+    deleteBtn.addEventListener('click', function () {
+        if (confirm("Are you sure you want to delete this todo?")) {
+            RemoveTodo(li, todoText);
+        }
+    });
     todolist.appendChild(li);
-    todos.push({text: todoText, completed: completed});
-    localStorage.setItem('todos', JSON.stringify(todos));
     inputfield.value = '';
 }
 
 function EditTodo(li) {
     const textSpan = li.querySelector('span');
     const todoText = textSpan ? textSpan.textContent : li.textContent.replace('✅', '').replace('✎', '').trim();
+    // Find the todo in the array to get its description
+    const todoIndex = todos.findIndex(t => t.text === todoText);
+    let todoDesc = '';
+    if (todoIndex !== -1) {
+        todoDesc = todos[todoIndex].description || '';
+    }
     modal.style.display = "block";
     removebtn.style.display = 'block';
+    modaltitle.innerHTML = "Edit Todo";
+    modal.style.display = "flex";
     inputfield.value = todoText;
+    descfield.value = todoDesc;
     inputfield.focus();
     editingTodoElement = li;
-    // Store the old text for reference when saving
     editingTodoElement.dataset.oldText = todoText;
 }
 
@@ -150,6 +186,7 @@ function RemoveTodo(li, todoText)
     const todoIndex = todos.findIndex(t => t.text === todoText);
     if (todoIndex !== -1) {
         todos.splice(todoIndex, 1);
+        console.log(todos);
         localStorage.setItem('todos', JSON.stringify(todos));
     }
 }

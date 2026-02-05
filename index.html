@@ -16,7 +16,7 @@
            <button id="add-todo-btn" aria-label="Add new todo">
        <span class="plus-icon">+</span>
        </button>
-            <p id="useroutput"></p>
+        <p id="useroutput"></p>
         </section>
         
     <main>
@@ -25,16 +25,17 @@
             <!--Here goes Todos-->
         </ul>
         <div id="myModal" class="modal">
-          <div class="modal-content">
-            <span class="close" aria-label="Stäng modal">&times;</span>
-                <label for="new-todo-input">New Todo:</label>
-
-                <input type="text" id="new-todo-input" placeholder="Enter new todo" aria-required="true" aria-describedby="todo-error">
-                <span id="todo-error" class="error-message" aria-live="polite"></span>
-
-                <button id="save-todo-btn">Save Todo</button>
-                <button id="remove-todo-btn" class="modal-removebtn">Remove Todo</button>
-          </div>
+                    <div class="modal-content">
+                        <span class="close" aria-label="Stäng modal">&times;</span>
+                        <h2 id="modal-title" class="modal-title">Add Todo</h2>
+                        <label for="new-todo-input">New Todo:</label>
+                        <input type="text" id="new-todo-input" placeholder="Enter new todo" aria-required="true" aria-describedby="todo-error">
+                        <span id="todo-error" class="error-message" aria-live="polite"></span>
+                        <label for="new-todo-desc">Description:</label>
+                        <input type="text" id="new-todo-desc" placeholder="Enter description (optional)">
+                        <button id="save-todo-btn">Save Todo</button>
+                        <button id="remove-todo-btn" class="modal-removebtn">Remove Todo</button>
+                    </div>
         </div>
        
     </main>

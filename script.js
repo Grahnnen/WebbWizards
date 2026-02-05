@@ -53,39 +53,59 @@ addbtn.addEventListener('click', function() {
     modaltitle.innerHTML = "Add Todo";
     modal.style.display = "flex";
 });
-//Save Todo from Modal
-savebtn.addEventListener('click', function() { //check if merge work
+//Save Todo from Modal (merged and cleaned up)
+savebtn.addEventListener('click', function() {
     const todoText = inputfield.value.trim();
     const todoDesc = descfield.value.trim();
-    const todoIndex = todos.findIndex(t => t.text === todoText);
-
     if (todoText === '') {
         todoError.textContent = 'Du måste ange en todo.';
         inputfield.setAttribute('aria-invalid', 'true');
         inputfield.focus();
         return;
     }
-
-    todoError.textContent = ''; 
+    todoError.textContent = '';
     inputfield.removeAttribute('aria-invalid');
 
-    if (todoIndex === -1) {
-        AddTodo(todoText, false, todoDesc);
-        todos.push({text: todoText, description: todoDesc, completed: false});
-        useroutput.innerHTML = "<p style='color:green'>Todo was added!</p>";
-    } else {
-        todos[todoIndex].description = todoDesc;
+    // Edit mode
+    if (editingTodoElement) {
+        const oldText = editingTodoElement.dataset.oldText;
+        // Prevent duplicate text when editing
+        const duplicateIndex = todos.findIndex(t => t.text === todoText && t.text !== oldText);
+        if (duplicateIndex !== -1) {
+            todoError.textContent = 'Todo får inte vara en dubblett.';
+            inputfield.setAttribute('aria-invalid', 'true');
+            inputfield.focus();
+            return;
+        }
+        const todoIndex = todos.findIndex(t => t.text === oldText);
+        if (todoIndex !== -1) {
+            todos[todoIndex].text = todoText;
+            todos[todoIndex].description = todoDesc;
+            localStorage.setItem('todos', JSON.stringify(todos));
+        }
         useroutput.innerHTML = "<p style='color:green'>Todo was updated!</p>";
+        editingTodoElement = null;
+    } else {
+        // Add mode
+        const todoIndex = todos.findIndex(t => t.text === todoText);
+        if (todoIndex === -1) {
+            AddTodo(todoText, false, todoDesc);
+            todos.push({text: todoText, description: todoDesc, completed: false});
+            localStorage.setItem('todos', JSON.stringify(todos));
+            useroutput.innerHTML = "<p style='color:green'>Todo was added!</p>";
+        } else {
+            todoError.textContent = 'Todo får inte vara en dubblett.';
+            inputfield.setAttribute('aria-invalid', 'true');
+            inputfield.focus();
+            return;
+        }
     }
-
-    localStorage.setItem('todos', JSON.stringify(todos));
-    inputfield.value = ""; 
-    descfield.value = "";
+    inputfield.value = '';
+    descfield.value = '';
     modal.style.display = "none";
-    todolist.innerHTML = '';
+    removebtn.style.display = 'none';
     init();
 });
-// Remove duplicate savebtn event listener and merge logic into one handler below
 //Close Modal
 span.onclick = function() {
      inputfield.value = "";
@@ -101,51 +121,7 @@ window.onclick = function(event) {
   }
 }
 
-//Save Todo from Modal
-savebtn.addEventListener('click', function() {
-    const todoText = inputfield.value.trim();
-    const todoDesc = descfield.value.trim();
-    if (todoText === '') {
-        alert("Todo cannot be empty!");
-        return;
-    }
-    if (editingTodoElement) {
-        // Edit mode: update the existing todo
-        const textSpan = editingTodoElement.querySelector('span');
-        if (textSpan) {
-            // Update text in UI
-            textSpan.textContent = todoText;
-        }
-        // Update in todos array and localStorage
-        const oldText = editingTodoElement.dataset.oldText;
-        const todoIndex = todos.findIndex(t => t.text === oldText);
-        if (todoIndex !== -1) {
-            todos[todoIndex].text = todoText;
-            todos[todoIndex].description = todoDesc;
-            localStorage.setItem('todos', JSON.stringify(todos));
-        }
-        editingTodoElement = null;
-        useroutput.innerHTML = "<p style='color:green'>Todo was updated!</p>";
-    } else {
-        // Add mode: add new todo if not duplicate
-        const todoIndex = todos.findIndex(t => t.text === todoText);
-        if (todoIndex === -1) {
-            AddTodo(todoText, false, todoDesc);
-            todos.push({text: todoText, description: todoDesc, completed: false});
-            localStorage.setItem('todos', JSON.stringify(todos));
-            useroutput.innerHTML = "<p style='color:green'>Todo was added!</p>";
-        } else {
-            alert("Todo cannot be duplicate!");
-            return;
-        }
-    }
-    inputfield.value = '';
-    descfield.value = '';
-    modal.style.display = "none";
-    removebtn.style.display = 'none';
-    todolist.innerHTML = '';
-    init();
-});
+
 
 
 function AddTodo(todoText, completed = false) {

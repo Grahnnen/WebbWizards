@@ -26,10 +26,12 @@
         </ul>
         <div id="myModal" class="modal">
           <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2 id="modal-title"  class="modal-title">Add Todo</h2>
-                <input type="text" id="new-todo-input" placeholder="Titel">
-                <input type="text" id="new-todo-desc" placeholder="Description">
+            <span class="close" aria-label="Stäng modal">&times;</span>
+                <label for="new-todo-input">New Todo:</label>
+
+                <input type="text" id="new-todo-input" placeholder="Enter new todo" aria-required="true" aria-describedby="todo-error">
+                <span id="todo-error" class="error-message" aria-live="polite"></span>
+
                 <button id="save-todo-btn">Save Todo</button>
                 <button id="remove-todo-btn" class="modal-removebtn">Remove Todo</button>
           </div>

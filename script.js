@@ -6,6 +6,7 @@ const modal = document.getElementById("myModal");
 const span = document.getElementsByClassName("close")[0];
 
 const savebtn = document.getElementById('save-todo-btn');
+const todoError = document.getElementById('todo-error');
 const removebtn = document.getElementById('remove-todo-btn');
 
 // Track the currently edited todo element
@@ -53,6 +54,37 @@ addbtn.addEventListener('click', function() {
     modal.style.display = "flex";
 });
 //Save Todo from Modal
+savebtn.addEventListener('click', function() { //check if merge work
+    const todoText = inputfield.value.trim();
+    const todoDesc = descfield.value.trim();
+    const todoIndex = todos.findIndex(t => t.text === todoText);
+
+    if (todoText === '') {
+        todoError.textContent = 'Du måste ange en todo.';
+        inputfield.setAttribute('aria-invalid', 'true');
+        inputfield.focus();
+        return;
+    }
+
+    todoError.textContent = ''; 
+    inputfield.removeAttribute('aria-invalid');
+
+    if (todoIndex === -1) {
+        AddTodo(todoText, false, todoDesc);
+        todos.push({text: todoText, description: todoDesc, completed: false});
+        useroutput.innerHTML = "<p style='color:green'>Todo was added!</p>";
+    } else {
+        todos[todoIndex].description = todoDesc;
+        useroutput.innerHTML = "<p style='color:green'>Todo was updated!</p>";
+    }
+
+    localStorage.setItem('todos', JSON.stringify(todos));
+    inputfield.value = ""; 
+    descfield.value = "";
+    modal.style.display = "none";
+    todolist.innerHTML = '';
+    init();
+});
 // Remove duplicate savebtn event listener and merge logic into one handler below
 //Close Modal
 span.onclick = function() {
@@ -190,5 +222,6 @@ function RemoveTodo(li, todoText)
         localStorage.setItem('todos', JSON.stringify(todos));
     }
 }
+
 
 init();

@@ -116,7 +116,7 @@ savebtn.addEventListener('click', function() {
 });
 
 
-function AddTodo(todoText, completed = false, description = "") {
+function AddTodo(todoText, completed = false) {
     // Create list item
     const li = document.createElement('li');
     // Set text decoration if completed

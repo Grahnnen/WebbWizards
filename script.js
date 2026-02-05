@@ -15,7 +15,8 @@ function init() {
 
     todolist.innerHTML = '';
     const storedTodos = JSON.parse(localStorage.getItem('todos'));
-    todos = storedTodos;
+    todos = storedTodos || [];
+
     console.log(storedTodos);
     if (storedTodos) {
         storedTodos.forEach(function(todo) {

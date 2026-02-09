@@ -10,7 +10,7 @@ body {
     overflow-x: hidden;       
 }
 
-header, footer {
+header, h3, footer {
     border: 1px solid #ccc;
     border-radius: 5px;
     display: flex;
@@ -18,40 +18,32 @@ header, footer {
     padding: 0.75rem;   
 }
 
-.button-and-output {
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    border-radius: 5px;
-}
-
 /* Center the button on the page */
 .button-and-output {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 2rem 0;
+  margin: 1rem 0;
 }
 
-/* Add Todo Button – fixed size */
+/* Add Todo Button */
 #add-todo-btn {
-    margin-bottom: 0.5rem;
-    padding: 0.75rem 1.25rem; 
+    padding: 0.5rem 1.25rem; 
     min-height: 44px;         
     min-width: 44px;
     font-size: 1rem;
     border: none;
-    border-radius: 20px;
     background-color: #4CAF50;
     color: white;
     cursor: pointer;
-  width: 64px;          /* 👈 fixed size */
-  height: 64px;         /* 👈 fixed size */
+  width: clamp(48px, 10vw, 64px);
+  aspect-ratio: 1 / 1;
+  font-size: clamp(1.2rem, 4vw, 2rem);
+
   border-radius: 50%;
 
   background: linear-gradient(135deg, #4CAF50, #6fdc8c);
   color: white;
-  font-size: 2rem;
   font-weight: 600;
 
   border: none;
@@ -83,18 +75,10 @@ header, footer {
   box-shadow: 0 0 0 4px rgba(76, 175, 80, 0.35);
 }
 
-
-/* Mobile friendly */
-@media (max-width: 480px) {
-  #add-todo-btn {
-    font-size: 0.95rem;
-    padding: 0.7rem 1.4rem;
-  }
-}
-
-
 #useroutput {
-   min-height: 1.5rem;
+  min-height: 1.5rem;
+  display: block;
+  overflow: hidden;
 }
 
 main {
@@ -112,24 +96,10 @@ main {
 #ulList {
   list-style: none;
   padding: 0;
-  margin: 13rem ;
-  max-width: 300px;
+  max-width: min(90%, 420px);
+  margin: 1.5rem auto;
   min-height: 2rem;
   
-}
-
-/* =========================
-   Todo list container
-   Mobile-first
-   ========================= */
-
-#ulList {
-    min-height: 2rem;
-  list-style: none;
-  padding: 0;
-  margin: 1.5rem auto;      /* 👈 centrerad horisontellt */
-  max-width: 90%;           /* 👈 mobilanpassad bredd */
-  min-height: 2rem;
 }
 
 /* =========================
@@ -242,10 +212,6 @@ footer {
 
 /* adjustments for tablets */
 @media (min-width: 768px) {
-    main {
-        padding-left: 3rem;
-        padding-right: 3rem;
-    }
 
     .important-tasks {
         grid-template-columns: 1fr 1fr;
@@ -254,10 +220,6 @@ footer {
 
 /* adjustments for desktops */
 @media (min-width: 1024px) {
-    main {
-        padding-left: 10rem;
-        padding-right: 10rem;
-    }
 
     .important-tasks {
         grid-template-columns: 1fr 1fr 1fr;

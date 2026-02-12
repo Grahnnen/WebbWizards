@@ -12,5 +12,15 @@ export default defineConfig([
       sourceType: "module",
       ecmaVersion: "latest"
     }
+  },
+  {
+    files: ["**/*.test.js", "**/__tests__/**/*.js"],
+    plugins: { jest },
+    languageOptions: {
+      globals: globals.jest
+    },
+    rules: {
+      ...jest.configs.recommended.rules
+    }
   }
 ]);

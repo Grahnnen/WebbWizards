@@ -10,11 +10,14 @@ import { openEditModal } from './modal.js';
 // Renders the list of todos in the UI
 export function renderTodos() {
   dom.todolist.innerHTML = '';
-// Loop through todos and create list items
-  state.todos.forEach(todo => {
-    const li = document.createElement('li');
+   
+  const filteredTodos = state.selectedDate === 'all' // If 'all' is selected, show all todos, otherwise filter by selected date
+    ? state.todos
+    : state.todos.filter(todo => todo.date === state.selectedDate);
 
-    if (todo.completed) {
+  filteredTodos.forEach(todo => { // loop through the filtered list of todos and create list items
+    const li = document.createElement('li');
+      if (todo.completed) {
       li.style.textDecoration = 'line-through';
     }
 // Create check button

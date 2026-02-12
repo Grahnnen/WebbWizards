@@ -225,3 +225,51 @@ footer {
         grid-template-columns: 1fr 1fr 1fr;
     }
 }
+
+/* Style for Date selector */ 
+.date-selector-box {
+    position: relative; 
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.date-trigger {
+    cursor: pointer;
+    display: inline-block;
+    padding: 10px 20px;
+    background: #f4f4f4;
+    border-radius: 8px;
+    transition: background 0.2s;
+}
+
+.date-trigger:hover {
+    background: #e0e0e0;
+}
+
+.date-dropdown {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    list-style: none;
+    padding: 10px 0;
+    width: 200px;
+    z-index: 10; 
+}
+
+.date-dropdown li {
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.date-dropdown li:hover {
+    background-color: #f0f0f0;
+    color: #007bff;
+}
+
+.hidden {
+    display: none;
+}

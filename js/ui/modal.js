@@ -41,7 +41,7 @@ function saveFromModal() {
     todo.text = text;
     todo.description = desc;
   } else {
-    state.todos.push({ text, description: desc, completed: false });
+    state.todos.push({ text, description: desc, completed: false, starred: false });
   }
 
   saveTodos(state.todos);

@@ -10,6 +10,7 @@ export const dom = {
   removebtn: document.getElementById('remove-todo-btn'),
 
   todolist: document.getElementById('ulList'),
+  importantList: document.getElementById('importantList'),
   useroutput: document.getElementById('useroutput'),
   todoError: document.getElementById('todo-error'),
 

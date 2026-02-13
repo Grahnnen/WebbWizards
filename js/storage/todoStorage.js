@@ -16,6 +16,7 @@ export function loadTodos() {
      return parsed.filter(isValidTodo);
 
   } catch (error) {
+    console.error("Error loading todos:", error);
     return [];
   }
 }

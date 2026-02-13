@@ -1,6 +1,8 @@
 import js from "@eslint/js";
 import globals from "globals";
+import jest from "eslint-plugin-jest";
 import { defineConfig } from "eslint/config";
+
 
 export default defineConfig([
   {
@@ -11,6 +13,13 @@ export default defineConfig([
       globals: globals.browser,
       sourceType: "module",
       ecmaVersion: "latest"
+    }
+  },
+   {
+    files: ["*.config.js", "*.config.cjs", "babel.config.js", "jest.config.cjs"],
+    languageOptions: {
+      globals: globals.node,
+      sourceType: "commonjs"
     }
   },
   {

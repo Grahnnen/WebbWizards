@@ -13,7 +13,7 @@ export function renderTodos() {
    
   const filteredTodos = state.selectedDate === 'all' // If 'all' is selected, show all todos, otherwise filter by selected date
     ? state.todos
-    : state.todos.filter(todo => todo.date === state.selectedDate);
+    : state.todos.filter(todo => todo.dueDate === state.selectedDate);
 
   // Sort todos by due date, with those without a due date at the top
   filteredTodos.sort((a, b) => {

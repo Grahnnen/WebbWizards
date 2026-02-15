@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
   dateList.addEventListener('click', (e) => {
     // check if the clicked element is an <li> (a date option)
     if (e.target.tagName === 'LI') {
-      const selectedDateValue = e.target.dataset.date;
+      const selectedDateValue = e.target.dataset.dueDate;
       const selectedDateText = e.target.textContent;
 
       // Update the global state with the selected date

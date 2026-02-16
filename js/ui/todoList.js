@@ -12,9 +12,6 @@ import { toggleTodo, removeTodo } from '../logic/todoLogic.js';
 export function renderTodos() {
   dom.todolist.innerHTML = '';
 // Loop through todos and create list items
-  state.todos.forEach(todo => {
-    const li = document.createElement('li');
-   
   const filteredTodos = state.selectedDate === 'all' // If 'all' is selected, show all todos, otherwise filter by selected date
     ? [state.todos]
     : state.todos.filter(todo => todo.dueDate === state.selectedDate);
@@ -26,7 +23,7 @@ export function renderTodos() {
   if (!b.dueDate && a.dueDate) return 1;
 
   if (a.dueDate && b.dueDate) {
-    return new Date(a.dueDate) - new Date(b.dueDate);
+    return new Date(a.dueDate) - new Date(b.dueDate) 
   }
 
   return 0;
@@ -41,6 +38,7 @@ export function renderTodos() {
     const checkBtn = document.createElement('button');
     checkBtn.innerHTML = todo.completed ? '✅' : '⬜ ';
     checkBtn.onclick = () => toggleTodoClicked(todo.text);
+    console.log("Rendering todo:", todo.text, "Completed:", todo.completed);
 
     const span = document.createElement('span');
     span.textContent = todo.text;

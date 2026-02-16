@@ -4,6 +4,7 @@
 export const dom = {
   inputfield: document.getElementById('new-todo-input'),
   descfield: document.getElementById('new-todo-desc'),
+  dueDate: document.getElementById('new-todo-due-date'),
 
   addbtn: document.getElementById('add-todo-btn'),
   savebtn: document.getElementById('save-todo-btn'),

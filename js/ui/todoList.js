@@ -14,6 +14,29 @@ export function renderTodos() {
 // Loop through todos and create list items
   state.todos.forEach(todo => {
     const li = document.createElement('li');
+   
+  const filteredTodos = state.selectedDate === 'all' // If 'all' is selected, show all todos, otherwise filter by selected date
+    ? [state.todos]
+    : state.todos.filter(todo => todo.dueDate === state.selectedDate);
+
+  // Sort todos by due date, with those without a due date at the top
+  filteredTodos.sort((a, b) => {
+  if (!a.dueDate && b.dueDate) return -1;
+
+  if (!b.dueDate && a.dueDate) return 1;
+
+  if (a.dueDate && b.dueDate) {
+    return new Date(a.dueDate) - new Date(b.dueDate);
+  }
+
+  return 0;
+});
+
+  filteredTodos.forEach(todo => { // loop through the filtered list of todos and create list items
+    const li = document.createElement('li');
+      if (todo.completed) {
+      li.style.textDecoration = 'line-through';
+    }
 // Create check button
     const checkBtn = document.createElement('button');
     checkBtn.innerHTML = todo.completed ? '✅' : '⬜ ';

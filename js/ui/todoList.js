@@ -13,7 +13,7 @@ export function renderTodos() {
   dom.todolist.innerHTML = '';
 // Loop through todos and create list items
   const filteredTodos = state.selectedDate === 'all' // If 'all' is selected, show all todos, otherwise filter by selected date
-    ? [state.todos]
+    ? state.todos
     : state.todos.filter(todo => todo.dueDate === state.selectedDate);
 
   // Sort todos by due date, with those without a due date at the top
@@ -31,14 +31,25 @@ export function renderTodos() {
 
   filteredTodos.forEach(todo => { // loop through the filtered list of todos and create list items
     const li = document.createElement('li');
+
+    li.tabIndex = 0;
+
       if (todo.completed) {
       li.style.textDecoration = 'line-through';
     }
 // Create check button
     const checkBtn = document.createElement('button');
     checkBtn.innerHTML = todo.completed ? '✅' : '⬜ ';
+    checkBtn.tabIndex = 0;
+
+    // Keyboard support
+    checkBtn.onkeydown = (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        toggleTodoClicked(todo.text);
+      }
+    };
     checkBtn.onclick = () => toggleTodoClicked(todo.text);
-    
+
     console.log("Rendering todo:", todo.text, "Completed:", todo.completed);
 
     const span = document.createElement('span');
@@ -51,11 +62,37 @@ export function renderTodos() {
 // Create edit button
     const editBtn = document.createElement('button');
     editBtn.innerHTML = '✎';
+
+    editBtn.tabIndex = 0;
+    editBtn.onkeydown = (e) => {
+      if (e.key === 'Enter' || e.key === ' ') openEditModal(todo.text);
+    };
+
     editBtn.onclick = () => openEditModal(todo.text);
 // Create delete button
     const deleteBtn = document.createElement('button');
     deleteBtn.innerHTML = '🗑';
-    deleteBtn.onclick = () => removeTodoClicked(todo.text);
+    
+    // Keyboard support
+    deleteBtn.tabIndex = 0;
+    deleteBtn.onkeydown = (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.stopPropagation(); 
+        removeTodoClicked(todo.text);
+      }
+    };
+    
+    deleteBtn.onclick = (e) => {
+        e.stopPropagation();
+        removeTodoClicked(todo.text);
+    };
+    
+    li.onkeydown = (e) => {
+      if (e.target === li && e.key === 'Enter') {
+        openEditModal(todo.text);
+      }
+    };
+    
 // Append buttons and text to list item
     li.append(checkBtn, span, starBtn, editBtn, deleteBtn);
     dom.todolist.appendChild(li);

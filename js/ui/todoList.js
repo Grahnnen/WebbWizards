@@ -76,7 +76,9 @@ function renderImportantTodos() {
 
   starred.forEach(todo => {
     const li = document.createElement('li');
-    li.textContent = todo.text;
+    li.textContent = todo.text + " / " + todo.dueDate;;
+    li.id = "box-element";
+    li.className = "box-element";
     dom.importantList.appendChild(li);
   });
 }

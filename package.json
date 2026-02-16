@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"No tests yet\"",
+    "test": "jest",
     "lint": "eslint ."
   },
   "repository": {
@@ -20,9 +20,13 @@
   },
   "homepage": "https://github.com/Grahnnen/WebbWizards#readme",
   "devDependencies": {
+    "@babel/preset-env": "^7.29.0",
     "@eslint/js": "^9.39.2",
+    "babel-jest": "^30.2.0",
     "eslint": "^9.39.2",
+    "eslint-plugin-jest": "^29.13.0",
     "globals": "^17.3.0",
-    "jest": "^29.7.0"
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^30.2.0"
   }
 }

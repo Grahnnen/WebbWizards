@@ -63,7 +63,7 @@ function saveFromModal() {
     todo.description = desc;
     todo.dueDate = dueDate;
   } else {
-    state.todos.push({ text, description: desc, dueDate, completed: false });
+    state.todos.push({ text, description: desc, dueDate, completed: false, starred: false });
   }
 
   saveTodos(state.todos);

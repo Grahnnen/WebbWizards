@@ -43,6 +43,11 @@ export function renderTodos() {
 
     const span = document.createElement('span');
     span.textContent = todo.text;
+  // Create star button
+    const starBtn = document.createElement('button');
+    starBtn.innerHTML = todo.starred ? '⭐' : '☆';
+    starBtn.setAttribute('aria-label', todo.starred ? 'Unstar todo' : 'Star todo');
+    starBtn.onclick = () => toggleStar(todo.text);
 // Create edit button
     const editBtn = document.createElement('button');
     editBtn.innerHTML = '✎';
@@ -52,8 +57,32 @@ export function renderTodos() {
     deleteBtn.innerHTML = '🗑';
     deleteBtn.onclick = () => removeTodoClicked(todo.text);
 // Append buttons and text to list item
-    li.append(checkBtn, span, editBtn, deleteBtn);
+    li.append(checkBtn, span, starBtn, editBtn, deleteBtn);
     dom.todolist.appendChild(li);
+  });
+   renderImportantTodos();
+}
+// Toggles the starred state of a todo
+function renderImportantTodos() {
+  if (!dom.importantList) return;
+
+  dom.importantList.innerHTML = '';
+
+  const starred = state.todos.filter(t => t.starred);
+
+  if (starred.length === 0) {
+    const card = document.createElement('div');
+    card.className = 'important-card empty';
+    card.textContent = 'No important todos yet.';
+    dom.importantList.appendChild(card);
+    return;
+  }
+
+  starred.forEach(todo => {
+    const card = document.createElement('div');
+    card.className = 'important-card';
+    card.textContent = `${todo.text} / ${todo.dueDate ?? ''}`.trim();
+    dom.importantList.appendChild(card);
   });
 }
 // Toggles the completed state of a todo
@@ -64,10 +93,17 @@ function toggleTodoClicked(text) {
   saveTodos(state.todos);
   renderTodos();
 }
+function toggleStar(text) {
+  const todo = state.todos.find(t => t.text === text);
+  if (!todo) return;
+
+  todo.starred = !todo.starred;
+  saveTodos(state.todos);
+  renderTodos();
+}
 // Removes a todo from the list
 function removeTodoClicked(text) {
   state.todos = removeTodo(state.todos, text);
   saveTodos(state.todos);
   renderTodos();
 }
-

@@ -18,6 +18,23 @@ export function setupModal() {
   };
 }
 
+document.addEventListener('keydown', (e) => {
+    if (dom.modal.style.display === 'flex' && e.key === 'Escape') {
+      closeModal();
+    }
+  });
+
+document.addEventListener('keydown', (e) => {
+    if (dom.modal.style.display === 'flex' && e.key === 'Enter') {
+      if (document.activeElement === dom.inputfield ||
+          document.activeElement === dom.descfield ||
+          document.activeElement === dom.dueDate) {
+        saveFromModal();
+      }
+    }
+  });
+
+
 function openAddModal() {
   state.editingTodoElement = null;
   dom.modaltitle.textContent = 'Add Todo';
@@ -26,6 +43,8 @@ function openAddModal() {
   dom.descfield.value = '';
   dom.dueDate.value = '';
   dom.modal.style.display = 'flex';
+  dom.inputfield.focus();
+
 }
 
 function saveFromModal() {

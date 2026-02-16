@@ -30,12 +30,21 @@ export function renderTodos() {
 
   filteredTodos.forEach(todo => { // loop through the filtered list of todos and create list items
     const li = document.createElement('li');
+
+    li.tabIndex = 0;
+
       if (todo.completed) {
       li.style.textDecoration = 'line-through';
     }
 // Create check button
     const checkBtn = document.createElement('button');
     checkBtn.innerHTML = '✅';
+
+    checkBtn.tabIndex = 0;
+    checkBtn.onkeydown = (e) => {
+      if (e.key === 'Enter' || e.key === ' ') toggleTodo(todo.text);
+    };
+
     checkBtn.onclick = () => toggleTodo(todo.text);
 
     const span = document.createElement('span');
@@ -43,11 +52,29 @@ export function renderTodos() {
 // Create edit button
     const editBtn = document.createElement('button');
     editBtn.innerHTML = '✎';
+
+    editBtn.tabIndex = 0;
+    editBtn.onkeydown = (e) => {
+      if (e.key === 'Enter' || e.key === ' ') openEditModal(todo.text);
+    };
+
     editBtn.onclick = () => openEditModal(todo.text);
 // Create delete button
     const deleteBtn = document.createElement('button');
     deleteBtn.innerHTML = '🗑';
+
+    deleteBtn.tabIndex = 0;
+    deleteBtn.onkeydown = (e) => {
+      if (e.key === 'Enter' || e.key === ' ') removeTodo(todo.text);
+    };
+
     deleteBtn.onclick = () => removeTodo(todo.text);
+
+    li.onkeydown = (e) => {
+      if (e.key === 'Enter') openEditModal(todo.text);
+    };
+
+
 // Append buttons and text to list item
     li.append(checkBtn, span, editBtn, deleteBtn);
     dom.todolist.appendChild(li);

@@ -18,6 +18,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   dateTrigger.addEventListener('click', () => {
     dateList.classList.toggle('hidden');
+    // Make all date options focusable with Tab when the date list is visible
+    if (!dateList.classList.contains('hidden')) {
+      Array.from(dateList.querySelectorAll('li')).forEach(li => li.tabIndex = 0);
+    }
   });
 
 
@@ -38,5 +42,21 @@ document.addEventListener('DOMContentLoaded', () => {
       renderTodos();
     }
   });
+
+dateTrigger.tabIndex = 0;
+
+  dateTrigger.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      dateList.classList.toggle('hidden');
+    }
+  });
+
+  dateList.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && e.target.tagName === 'LI') {
+      e.target.click();
+    }
+  });
+  
 });
+
 

@@ -68,18 +68,18 @@ function renderImportantTodos() {
   const starred = state.todos.filter(t => t.starred);
 
   if (starred.length === 0) {
-    const li = document.createElement('li');
-    li.textContent = 'No important todos yet.';
-    dom.importantList.appendChild(li);
+    const card = document.createElement('div');
+    card.className = 'important-card empty';
+    card.textContent = 'No important todos yet.';
+    dom.importantList.appendChild(card);
     return;
   }
 
   starred.forEach(todo => {
-    const li = document.createElement('li');
-    li.textContent = todo.text + " / " + todo.dueDate;;
-    li.id = "box-element";
-    li.className = "box-element";
-    dom.importantList.appendChild(li);
+    const card = document.createElement('div');
+    card.className = 'important-card';
+    card.textContent = `${todo.text} / ${todo.dueDate ?? ''}`.trim();
+    dom.importantList.appendChild(card);
   });
 }
 // Toggles the completed state of a todo

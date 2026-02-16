@@ -38,6 +38,7 @@ export function renderTodos() {
     const checkBtn = document.createElement('button');
     checkBtn.innerHTML = todo.completed ? '✅' : '⬜ ';
     checkBtn.onclick = () => toggleTodoClicked(todo.text);
+    
     console.log("Rendering todo:", todo.text, "Completed:", todo.completed);
 
     const span = document.createElement('span');

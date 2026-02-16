@@ -24,12 +24,14 @@ function openAddModal() {
   dom.removebtn.style.display = 'none';
   dom.inputfield.value = '';
   dom.descfield.value = '';
+  dom.dueDate.value = '';
   dom.modal.style.display = 'flex';
 }
 
 function saveFromModal() {
   const text = dom.inputfield.value.trim();
   const desc = dom.descfield.value.trim();
+  const dueDate = dom.dueDate.value;
 
   if (!text) {
     dom.todoError.textContent = 'Du måste ange en todo.';
@@ -40,8 +42,9 @@ function saveFromModal() {
     const todo = state.todos.find(t => t.text === state.editingTodoElement);
     todo.text = text;
     todo.description = desc;
+    todo.dueDate = dueDate;
   } else {
-    state.todos.push({ text, description: desc, completed: false });
+    state.todos.push({ text, description: desc, dueDate, completed: false });
   }
 
   saveTodos(state.todos);
@@ -70,6 +73,7 @@ export function openEditModal(todoText) {
 
   dom.inputfield.value = todo.text;
   dom.descfield.value = todo.description || '';
+  dom.dueDate.value = todo.dueDate || '';
 
   dom.modal.style.display = 'flex';
   dom.inputfield.focus();

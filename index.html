@@ -20,7 +20,16 @@
         </section>
         
     <main>
-        <h3 id="today-heading">Torsdag 5/2</h3>
+        <div class="date-selector-box">
+            <h3 id="today-heading" class="date-trigger">Torsdag 5/2 <span class="arrow">▼</span></h3>
+
+            <ul id="date-list" class="date-dropdown hidden">
+                <li data-due-date="2026-02-25">Onsdag 25/2</li>
+                <li data-due-date="2026-02-26">Torsdag 26/2</li>
+                <li data-due-date="2026-02-27">Fredag 27/2</li>
+            </ul>
+        </div>
+        
         <ul id="ulList">
             <!--Here goes Todos-->
         </ul>
@@ -33,6 +42,8 @@
                         <span id="todo-error" class="error-message" aria-live="polite"></span>
                         <label for="new-todo-desc">Description:</label>
                         <input type="text" id="new-todo-desc" placeholder="Enter description (optional)">
+                        <label for="new-todo-due-date">Due Date:</label>
+                        <input type="date" id="new-todo-due-date" placeholder="Enter due date (optional)">
                         <button id="save-todo-btn">Save Todo</button>
                         <button id="remove-todo-btn" class="modal-removebtn">Remove Todo</button>
                     </div>

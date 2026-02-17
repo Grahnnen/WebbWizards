@@ -4,6 +4,15 @@ import { renderTodos } from './ui/todoList.js';
 import { setupModal } from './ui/modal.js';
 
 
+//Register serviceworker
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", async () => {
+    const reg = await navigator.serviceWorker.register("/sw.js", { scope: "/" });
+    console.log(navigator.serviceWorker.controller ? "SW controlling ✅" : "Not controlled ❌");
+
+  });
+}
+
 // this is the main entry point for our app, where we will initialize the state,
 //  load todos from storage, and set up the UI components such as the todo list and modal
 

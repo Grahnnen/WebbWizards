@@ -7,7 +7,7 @@ import { setupModal } from './ui/modal.js';
 //Register serviceworker
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", async () => {
-    const reg = await navigator.serviceWorker.register("/sw.js", { scope: "/" });
+    await navigator.serviceWorker.register("/sw.js", { scope: "/" });
     console.log(navigator.serviceWorker.controller ? "SW controlling ✅" : "Not controlled ❌");
 
   });

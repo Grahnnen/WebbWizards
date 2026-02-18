@@ -62,6 +62,7 @@ export function renderTodos() {
 // Create edit button
     const editBtn = document.createElement('button');
     editBtn.innerHTML = '✎';
+    editBtn.setAttribute('aria-label', 'Edit todo');
 
     editBtn.tabIndex = 0;
     editBtn.onkeydown = (e) => {
@@ -72,6 +73,7 @@ export function renderTodos() {
 // Create delete button
     const deleteBtn = document.createElement('button');
     deleteBtn.innerHTML = '🗑';
+    deleteBtn.setAttribute('aria-label', 'Delete todo');
     
     // Keyboard support
     deleteBtn.tabIndex = 0;

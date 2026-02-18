@@ -2,6 +2,7 @@ import { state, setSelectedDate } from './state.js';
 import { loadTodos } from './storage/todoStorage.js';
 import { renderTodos } from './ui/todoList.js';
 import { setupModal } from './ui/modal.js';
+import { initDom } from './ui/dom.js';
 
 
 //Register serviceworker
@@ -60,6 +61,7 @@ function generateDateOptions() {
 
 document.addEventListener('DOMContentLoaded', () => {
   generateDateOptions();
+  initDom();
   state.todos = loadTodos();
   renderTodos();
   setupModal();

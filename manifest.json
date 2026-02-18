@@ -1,0 +1,9 @@
+{
+  "short_name": "TodoApp",
+  "name": "WebbWizards Todo Application",
+  "icons": [],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}

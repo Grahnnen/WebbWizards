@@ -20,6 +20,26 @@ document.addEventListener('DOMContentLoaded', () => {
   state.todos = loadTodos();
   renderTodos();
   setupModal();
+   
+  const today = new Date();
+  const day = today.getDate();
+  const month = today.getMonth() + 1;
+
+  const todayHeading = document.getElementById("today-heading");
+  todayHeading.childNodes[0].textContent = `Idag ${day}/${month} `;
+
+  const yyyy = today.getFullYear();
+  const mm = String(month).padStart(2, "0");
+  const dd = String(day).padStart(2, "0");
+
+  const todayDateString = `${yyyy}-${mm}-${dd}`;
+
+document.getElementById("today-option").dataset.dueDate = todayDateString;
+
+  todayHeading.addEventListener("click", () => {
+    setSelectedDate(todayDateString);
+    renderTodos();
+  });
 
   //Date selection logic
   const dateTrigger = document.querySelector('#today-heading');

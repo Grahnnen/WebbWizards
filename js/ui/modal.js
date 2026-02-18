@@ -50,7 +50,8 @@ function openAddModal() {
 function saveFromModal() {
   const text = dom.inputfield.value.trim();
   const desc = dom.descfield.value.trim();
-  const dueDate = dom.dueDate.value;
+  const today = new Date().toISOString().split("T")[0];
+  const dueDate = dom.dueDate.value || today;
 
   if (!text) {
     dom.todoError.textContent = 'Du måste ange en todo.';

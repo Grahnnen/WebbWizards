@@ -26,7 +26,7 @@ export function setupDOM() {
 
       <ul id="ulList"></ul>
 
-      <div id="myModal" class="modal hidden">
+      <div id="myModal" class="modal">
         <div class="modal-content">
           <span class="close" aria-label="Stäng modal">&times;</span>
           <h2 id="modal-title" class="modal-title">Add Todo</h2>

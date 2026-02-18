@@ -1,4 +1,4 @@
-import { dom } from './dom.js';
+import { dom, initDom } from './dom.js';
 import { state } from '../state.js';
 import { saveTodos } from '../storage/todoStorage.js';
 import { renderTodos } from './todoList.js';
@@ -8,6 +8,7 @@ import { renderTodos } from './todoList.js';
 // including opening, closing, and saving from the modal
 
 export function setupModal() {
+  initDom();
   dom.addbtn.onclick = openAddModal;
   dom.savebtn.onclick = saveFromModal;
   dom.removebtn.onclick = removeFromModal;
@@ -81,6 +82,7 @@ function removeFromModal() {
 function closeModal() {
   dom.modal.style.display = 'none';
 }
+
 export function openEditModal(todoText) {
   const todo = state.todos.find(t => t.text === todoText);
   if (!todo) return;

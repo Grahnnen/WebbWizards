@@ -33,7 +33,7 @@ header, h3, footer {
     min-width: 44px;
     font-size: 1rem;
     border: none;
-    background-color: #4CAF50;
+    background-color: #2e7d32;
     color: white;
     cursor: pointer;
   width: clamp(48px, 10vw, 64px);
@@ -42,7 +42,7 @@ header, h3, footer {
 
   border-radius: 50%;
 
-  background: linear-gradient(135deg, #4CAF50, #6fdc8c);
+  background: linear-gradient(135deg, #2e7d32, #43a047);
   color: white;
   font-weight: 600;
 
@@ -53,26 +53,26 @@ header, h3, footer {
   align-items: center;
   justify-content: center;
 
-  box-shadow: 0 10px 28px rgba(76, 175, 80, 0.4);
+  box-shadow: 0 10px 28px rgba(46, 125, 50, 0.4);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 /* Hover */
 #add-todo-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 14px 36px rgba(76, 175, 80, 0.45);
+  box-shadow: 0 14px 36px rgba(46, 125, 50, 0.45);
 }
 
 /* Active (tap / click) */
 #add-todo-btn:active {
   transform: translateY(0);
-  box-shadow: 0 6px 18px rgba(76, 175, 80, 0.35);
+  box-shadow: 0 6px 18px rgba(46, 125, 50, 0.35);
 }
 
 /* Focus (accessibility) */
 #add-todo-btn:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 4px rgba(76, 175, 80, 0.35);
+  box-shadow: 0 0 0 4px rgba(46, 125, 50, 0.35);
 }
 
 #useroutput {
@@ -252,6 +252,11 @@ footer {
     background: #f4f4f4;
     border-radius: 8px;
     transition: background 0.2s;
+    border: none;        
+    font-size: 1.5rem; 
+    font-weight: bold;
+    font-family: inherit;
+    color: inherit;
 }
 
 .date-trigger:hover {

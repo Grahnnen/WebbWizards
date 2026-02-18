@@ -2,6 +2,7 @@ import { state, setSelectedDate } from './state.js';
 import { loadTodos } from './storage/todoStorage.js';
 import { renderTodos } from './ui/todoList.js';
 import { setupModal } from './ui/modal.js';
+import { initDom } from './ui/dom.js';
 
 
 //Register serviceworker
@@ -17,6 +18,7 @@ if ("serviceWorker" in navigator) {
 //  load todos from storage, and set up the UI components such as the todo list and modal
 
 document.addEventListener('DOMContentLoaded', () => {
+  initDom();
   state.todos = loadTodos();
   renderTodos();
   setupModal();

@@ -45,5 +45,8 @@ export function setupDOM() {
         </div>
       </div>
     </main>
+    <h2>Important</h2>
+    <section id="importantList" class="important-tasks">  
+    </section>
   `;
 }

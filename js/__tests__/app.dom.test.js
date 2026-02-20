@@ -9,18 +9,18 @@ beforeEach(() => {
     localStorage.clear();
 });
 
-test("render initial todos from storage", async () => {
-  // 1. Mock storage
+test("That the app renders initial todos from storage", async () => {
+  //Arrange
   localStorage.setItem("todos", JSON.stringify([
     { id: 1, text: "Köp mjölk", completed: false }
   ]));
   
   state.selectedDate = "all" 
   await import("../app.js");
-
-  // 2. Trigger DOMContentLoaded so the app starts
+  
+  //Act
   document.dispatchEvent(new Event("DOMContentLoaded"));
 
-  // 3. Control that todo shows in DOM
+  //Assert
   expect(screen.getByText("Köp mjölk")).toBeInTheDocument();
 });

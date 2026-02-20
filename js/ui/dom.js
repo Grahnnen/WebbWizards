@@ -1,21 +1,22 @@
 
 
 // this is the file where we will store all our DOM element references for easy access across the app
-export const dom = {
-  inputfield: document.getElementById('new-todo-input'),
-  descfield: document.getElementById('new-todo-desc'),
-  dueDate: document.getElementById('new-todo-due-date'),
+export const dom = {}
+export function initDom() {
+  dom.inputfield = document.getElementById('new-todo-input');
+  dom.descfield = document.getElementById('new-todo-desc');
+  dom.dueDate = document.getElementById('new-todo-due-date');
 
-  addbtn: document.getElementById('add-todo-btn'),
-  savebtn: document.getElementById('save-todo-btn'),
-  removebtn: document.getElementById('remove-todo-btn'),
+  dom.addbtn = document.getElementById('add-todo-btn');
+  dom.savebtn = document.getElementById('save-todo-btn');
+  dom.removebtn = document.getElementById('remove-todo-btn');
 
-  todolist: document.getElementById('ulList'),
-  importantList: document.getElementById('importantList'),
-  useroutput: document.getElementById('useroutput'),
-  todoError: document.getElementById('todo-error'),
+  dom.todolist = document.getElementById('ulList');
+  dom.importantList = document.getElementById('importantList');
+  dom.useroutput = document.getElementById('useroutput');
+  dom.todoError = document.getElementById('todo-error');
 
-  modal: document.getElementById('myModal'),
-  closeBtn: document.getElementsByClassName('close')[0],
-  modaltitle: document.getElementById('modal-title'),
+  dom.modal = document.getElementById('myModal');
+  dom.closeBtn = document.getElementsByClassName('close')[0];
+  dom.modaltitle = document.getElementById('modal-title');
 };

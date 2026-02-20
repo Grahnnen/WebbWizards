@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="The best todo app created by WebbWizards.">
     <title>WebbWizards Todo-App</title>
     <meta name="theme-color" content="#2c3e50">
     <link rel="stylesheet" href="./css/style.css">
@@ -24,19 +25,19 @@
         
     <main>
         <div class="date-selector-box">
-            <h3 id="today-heading" class="date-trigger">Torsdag 5/2 <span class="arrow">▼</span></h3>
+            <button id="today-heading" class="date-trigger" aria-expanded="false">
+                Show All <span class="arrow">▼</span>
+            </button>
 
             <ul id="date-list" class="date-dropdown hidden">
-                <li data-due-date="2026-02-25">Onsdag 25/2</li>
-                <li data-due-date="2026-02-26">Torsdag 26/2</li>
-                <li data-due-date="2026-02-27">Fredag 27/2</li>
+                
             </ul>
         </div>
         
-        <ul id="ulList">
+        <ul id="ulList" role="list" aria-label="Todo list">
             <!--Here goes Todos-->
         </ul>
-        <div id="myModal" class="modal">
+        <div id="myModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
                     <div class="modal-content">
                         <span class="close" aria-label="Stäng modal">&times;</span>
                         <h2 id="modal-title" class="modal-title">Add Todo</h2>
@@ -54,7 +55,7 @@
        
     </main>
 
-    <h3>Important</h3>
+    <h2>Important</h2>
     <section id="importantList" class="important-tasks">
         
     </section>

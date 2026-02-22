@@ -36,6 +36,10 @@ jobs:
       - name: Run tests
         run: npm test
       
+      # Lighthouse
+      - name: Run Lighthouse
+        run: npm run lighthouse
+        
       # Kör tester med kodtäckning
       - name: Run tests with coverage
         run: npm test -- --coverage
@@ -45,3 +49,4 @@ jobs:
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+      

@@ -5,7 +5,7 @@ import jestAxe from "jest-axe";
 const { axe, toHaveNoViolations} = jestAxe;
 expect.extend(toHaveNoViolations);
 
-it("index.html should have no accessibility violations", async () => {
+test("index.html should have no accessibility violations", async () => {
     const html = fs.readFileSync(path.join(process.cwd(), "index.html"), "utf8");
     document.documentElement.innerHTML = html;
 

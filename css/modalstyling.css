@@ -1,130 +1,142 @@
-/* The Modal (background) */
-.modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1000; /* Sit on top */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgba(0, 0, 0, 0.6); /* Dark overlay with blur effect */
-  backdrop-filter: blur(8px);
-  animation: fadeIn 0.3s ease;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes slideDown {
-  from {
-    transform: translateY(-50px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-/* Modal Content/Box */
-.modal-content {
-  background: linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%);
-  margin: 10% auto;
-  padding: 2.5rem;
-  border: none;
-  border-radius: 20px;
-  width: 90%;
-  max-width: 500px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-  position: relative;
-  animation: slideDown 0.4s ease;
-}
-
-/* The Close Button */
-.close {
-  color: #999;
-  position: absolute;
-  top: 1.5rem;
-  right: 1.5rem;
-  font-size: 2rem;
-  font-weight: 300;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  background: transparent;
-}
-
-.close:hover,
-.close:focus {
-  color: #667eea;
-  background: rgba(102, 126, 234, 0.1);
-  transform: rotate(90deg);
-}
-
-.modal-input {
-  width: 100%;
-  padding: 1rem 1.5rem;
-  margin: 1.5rem 0;
-  box-sizing: border-box;
-  border: 2px solid #e0e0e0;
-  border-radius: 12px;
-  font-size: 1rem;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  outline: none;
-  transition: all 0.3s ease;
-  background: white;
-}
-
-.modal-input:focus {
-  border-color: #667eea;
-  box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
-}
-
-.modal-savebtn {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border: none;
+/* Remove button for modal */
+.modal-removebtn {
+  background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
   color: white;
+  margin-top: 1rem;
+  border: none;
+  border-radius: 12px;
   padding: 1rem 2.5rem;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
+  width: 100%;
   font-size: 1rem;
   font-weight: 600;
-  margin-top: 1rem;
   cursor: pointer;
-  border-radius: 12px;
-  width: 100%;
+  box-shadow: 0 4px 15px rgba(231, 76, 60, 0.2);
   transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
 }
 
-.modal-savebtn:hover {
+/* The Modal (background) */
+.modal {
+  display: none;                 /* 👈 ENDa display-värdet */
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(6px);
+  z-index: 1000;
+
+  /* Flex centering */
+  align-items: center;
+  justify-content: center;
+}
+
+/* Modal box */
+.modal-content {
+  position: relative;            /* 👈 för close-knappen */
+  background: white;
+  width: 90%;
+  max-width: 420px;
+
+  padding: 2rem 1.5rem;
+  border-radius: 20px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+  animation: modalFade 0.25s ease;
+}
+
+
+/* Title */
+.modal-content h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #333;
+}
+
+/* Inputs */
+.modal-content input {
+  width: 100%;
+  max-width: 340px;
+
+  padding: 0.9rem 1.2rem;
+  font-size: 1rem;
+
+  border-radius: 12px;
+  border: 2px solid #e0e0e0;
+  outline: none;
+
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.modal-content input:focus {
+  border-color: #4CAF50;
+  box-shadow: 0 0 0 4px rgba(76, 175, 80, 0.15);
+}
+
+/* Save button */
+#save-todo-btn {
+  width: 100%;
+  max-width: 340px;
+
+  margin-top: 0.5rem;
+  padding: 0.9rem;
+
+  border: none;
+  border-radius: 999px;
+
+  background: linear-gradient(135deg, #4CAF50, #6fdc8c);
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(76, 175, 80, 0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#save-todo-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 12px 32px rgba(76, 175, 80, 0.45);
 }
 
-.modal-savebtn:active {
+#save-todo-btn:active {
   transform: translateY(0);
 }
 
-/* Responsive */
-@media (max-width: 600px) {
-  .modal-content {
-    width: 95%;
-    margin: 20% auto;
-    padding: 2rem;
-  }
+/* Close button */
+.close {
+  position: absolute;
+  top: 1.2rem;
+  right: 1.2rem;
+
+  font-size: 1.8rem;
+  cursor: pointer;
+  color: #999;
 }
 
+.close:hover {
+  color: #4CAF50;
+}
+
+/* Animation */
+@keyframes modalFade {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.modal-title {
+  margin-bottom: 0.5rem;
+  font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  font-size: 1.8rem;  
+  background-color: #eae740 ;
+  padding: 0.2rem 1rem;
+  border-radius: 12px;
+}

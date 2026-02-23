@@ -3,36 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="The best todo app created by WebbWizards.">
     <title>WebbWizards Todo-App</title>
+    <meta name="theme-color" content="#2c3e50">
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="./css/modalstyling.css">
+    <link rel="manifest" href="manifest.json">
+
 
 </head>
 <body>
     <header>
         <h1>Welcome to WebbWizards Todo-App</h1>
     </header>
-    <main>
-        <h2>Your Todos</h2>
-        <button id="add-todo-btn">Add Todo</button>
+        <section class="button-and-output"> 
+           <button id="add-todo-btn" aria-label="Add new todo">
+       <span class="plus-icon">+</span>
+       </button>
         <p id="useroutput"></p>
-        <ul id="ulList">
+        </section>
+        
+    <main>
+        <div class="date-selector-box">
+            <button id="today-heading" class="date-trigger" aria-expanded="false">
+                Show All <span class="arrow">▼</span>
+            </button>
+
+            <ul id="date-list" class="date-dropdown hidden">
+                
+            </ul>
+        </div>
+        
+        <ul id="ulList" role="list" aria-label="Todo list">
             <!--Here goes Todos-->
         </ul>
-        <div id="myModal" class="modal">
-
-          <!-- Modal content -->
-          <div class="modal-content">
-            <span class="close">&times;</span>
-                <input type="text" id="new-todo-input" placeholder="Enter new todo">
-                <button id="save-todo-btn">Save Todo</button>
-          </div>
-      
+        <div id="myModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+                    <div class="modal-content">
+                        <span class="close" aria-label="Stäng modal">&times;</span>
+                        <h2 id="modal-title" class="modal-title">Add Todo</h2>
+                        <label for="new-todo-input">New Todo:</label>
+                        <input type="text" id="new-todo-input" placeholder="Enter new todo" aria-required="true" aria-describedby="todo-error">
+                        <span id="todo-error" class="error-message" aria-live="polite"></span>
+                        <label for="new-todo-desc">Description:</label>
+                        <input type="text" id="new-todo-desc" placeholder="Enter description (optional)">
+                        <label for="new-todo-due-date">Due Date:</label>
+                        <input type="date" id="new-todo-due-date" placeholder="Enter due date (optional)">
+                        <button id="save-todo-btn">Save Todo</button>
+                        <button id="remove-todo-btn" class="modal-removebtn">Remove Todo</button>
+                    </div>
         </div>
+       
     </main>
+
+    <h2>Important</h2>
+    <section id="importantList" class="important-tasks">
+        
+    </section>
+
     <footer>
         <p>&copy; 2026 WebbWizards</p>
     </footer>
-    <script src="script.js"></script>
+    <script type="module" src="./js/app.js"></script>
+
 </body>
 </html>

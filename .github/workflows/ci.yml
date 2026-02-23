@@ -47,10 +47,7 @@ jobs:
         run: npm test -- --coverage
 
       # Ladda upp coverage till GitHub
-      - name: Upload coverage to Codecov
+      - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v5
         with:
-          fail_ci_if_error: false
-        env:
           token: ${{ secrets.CODECOV_TOKEN }}
-        

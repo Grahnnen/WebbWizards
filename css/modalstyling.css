@@ -1,36 +1,122 @@
-/* Remove button for modal */
-.modal-removebtn {
-  background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
-  color: white;
-  margin-top: 1rem;
-  border: none;
-  border-radius: 12px;
-  padding: 1rem 2.5rem;
+/* ===============================
+   MODAL ACTIONS (Save + Remove)
+================================ */
+
+.modal-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
   width: 100%;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  box-shadow: 0 4px 15px rgba(231, 76, 60, 0.2);
-  transition: all 0.3s ease;
+  max-width: 340px;
 }
 
-/* The Modal (background) */
+@media (min-width: 480px) {
+  .modal-actions {
+    flex-direction: row;
+  }
+}
+
+.modal-actions button {
+  flex: 1;
+}
+
+
+/* ===============================
+   REMOVE BUTTON
+================================ */
+
+.modal-removebtn {
+  padding: 0.8rem 1rem;
+
+  border: none;
+  border-radius: 8px;
+
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-family: inherit;
+
+  color: white;
+  background: linear-gradient(135deg, #ef4444, #b91c1c);
+
+  cursor: pointer;
+
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.25);
+
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.modal-removebtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(239, 68, 68, 0.35);
+}
+
+.modal-removebtn:active {
+  transform: scale(0.97);
+}
+
+.modal-removebtn:focus-visible {
+  outline: 3px solid #facc15;
+  outline-offset: 3px;
+}
+
+
+/* ===============================
+   SAVE BUTTON
+================================ */
+
+#save-todo-btn {
+  padding: 0.8rem 1rem;
+
+  border: none;
+  border-radius: 8px;
+
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-family: inherit;
+
+  color: white;
+  background: linear-gradient(135deg, #373a3a, #06b6d4);
+
+  cursor: pointer;
+
+  box-shadow: 0 6px 18px rgba(6, 182, 212, 0.35);
+
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#save-todo-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 26px rgba(6, 182, 212, 0.45);
+}
+
+#save-todo-btn:active {
+  transform: scale(0.97);
+}
+
+
+/* ===============================
+   MODAL BACKDROP
+================================ */
+
 .modal {
-  display: none;                 /* 👈 ENDa display-värdet */
+  display: none;
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.55);
   backdrop-filter: blur(6px);
   z-index: 1000;
 
-  /* Flex centering */
   align-items: center;
   justify-content: center;
 }
 
-/* Modal box */
+
+/* ===============================
+   MODAL BOX
+================================ */
+
 .modal-content {
-  position: relative;            /* 👈 för close-knappen */
+  position: relative;
   background: white;
   width: 90%;
   max-width: 420px;
@@ -48,80 +134,94 @@
 }
 
 
-/* Title */
-.modal-content h2 {
-  margin: 0;
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #333;
+/* ===============================
+   TITLE
+================================ */
+
+.modal-title {
+  margin-bottom: 0.5rem;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: 1.8rem;
+  font-weight: 600;
+
+  background: linear-gradient(135deg, #373a3a, #06b6d4);
+  padding: 0.3rem 1rem;
+  border-radius: 12px;
+
+  color: white;
 }
 
-/* Inputs */
+
+/* ===============================
+   INPUTS
+================================ */
+
 .modal-content input {
   width: 100%;
   max-width: 340px;
 
   padding: 0.9rem 1.2rem;
   font-size: 1rem;
-
-  border-radius: 12px;
-  border: 2px solid #e0e0e0;
+  
+  border-radius: 10px;
+  border: 1px solid #d1d5db;
   outline: none;
 
   transition: border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
 .modal-content input:focus {
-  border-color: #4CAF50;
-  box-shadow: 0 0 0 4px rgba(76, 175, 80, 0.15);
+  border-color: #06b6d4;
+  box-shadow: 0 0 0 4px rgba(6, 182, 212, 0.15);
 }
 
-/* Save button */
-#save-todo-btn {
-  width: 100%;
-  max-width: 340px;
 
-  margin-top: 0.5rem;
-  padding: 0.9rem;
+/* ===============================
+   CLOSE BUTTON
+================================ */
 
-  border: none;
-  border-radius: 999px;
-
-  background: linear-gradient(135deg, #4CAF50, #6fdc8c);
-  color: white;
-  font-size: 1rem;
-  font-weight: 600;
-
-  cursor: pointer;
-  box-shadow: 0 8px 24px rgba(76, 175, 80, 0.35);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-#save-todo-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 32px rgba(76, 175, 80, 0.45);
-}
-
-#save-todo-btn:active {
-  transform: translateY(0);
-}
-
-/* Close button */
 .close {
   position: absolute;
   top: 1.2rem;
   right: 1.2rem;
 
-  font-size: 1.8rem;
+  width: 40px;
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 1.4rem;
+  line-height: 1;
+
+  border-radius: 50%;
   cursor: pointer;
-  color: #999;
+
+  color: #64748b;
+
+  transition: background 0.2s ease, color 0.2s ease;
 }
 
 .close:hover {
-  color: #4CAF50;
+  background: rgba(6, 182, 212, 0.1);
+  color: #06b6d4;
 }
 
-/* Animation */
+.close:active {
+  transform: scale(0.9);
+}
+
+.close:focus-visible {
+  outline: 3px solid #06b6d4;
+  outline-offset: 3px;
+}
+
+
+/* ===============================
+   ANIMATION
+================================ */
+
 @keyframes modalFade {
   from {
     opacity: 0;
@@ -131,12 +231,4 @@
     opacity: 1;
     transform: translateY(0);
   }
-}
-.modal-title {
-  margin-bottom: 0.5rem;
-  font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-  font-size: 1.8rem;  
-  background-color: #eae740 ;
-  padding: 0.2rem 1rem;
-  border-radius: 12px;
 }

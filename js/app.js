@@ -47,7 +47,7 @@ function generateDateOptions() {
     //Add Today, Tomorrow etc. for the first few options
     if (i === 0) displayStr = `Today (${displayStr})`;
     else if (i === 1) displayStr = `Tomorrow (${displayStr})`;
-    else if (i === 2) displayStr = `Day after tomorrow (${displayStr})`;
+    else if (i === 2) displayStr = `Upcoming (${displayStr})`;
 
     const li = document.createElement('li');
     li.textContent = displayStr;

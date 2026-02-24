@@ -2,10 +2,10 @@ const CACHE_VERSION = 'v4';
 const CACHE_NAME = `app-cache-${CACHE_VERSION}`;
 
 const ASSETS = [
-  '/index.html',
-  '/css/style.css',
-  '/js/app.js',
-  '/offline.html'
+  './index.html',
+  './css/style.css',
+  './js/app.js',
+  './offline.html'
 ];
 
 // Install

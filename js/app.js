@@ -8,7 +8,7 @@ import { initDom } from './ui/dom.js';
 //Register serviceworker
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", async () => {
-    await navigator.serviceWorker.register("/sw.js", { scope: "/" });
+    await navigator.serviceWorker.register("./sw.js", { scope: "./" });
     console.log(navigator.serviceWorker.controller ? "SW controlling ✅" : "Not controlled ❌");
 
   });

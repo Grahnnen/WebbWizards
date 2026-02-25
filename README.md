@@ -103,12 +103,14 @@ SEO
 
 ## Members
 
-Team Members & Roles
+Team Members
 - Robin Grahn	
 - Lukas Karlsson
 - Lisa Ebbhagen
 - Liza Hjortling
 - Rolf Andersson
+
+We practiced rotating roles throughout the project to give every team member experience as both Product Owner and Scrum Master.
 
 ## Accessibility Reflection
 

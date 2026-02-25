@@ -1,7 +1,7 @@
 # WebbWizards Todo App
 
-![CI](https://github.com/YOUR-USERNAME/YOUR-REPO/actions/workflows/ci.yml/badge.svg)
-![codecov](https://codecov.io/gh/YOUR-USERNAME/YOUR-REPO/branch/main/graph/badge.svg)
+![CI](https://github.com/Grahnnen/WebbWizards/actions/workflows/ci.yml/badge.svg)
+![codecov](https://codecov.io/gh/Grahnnen/WebbWizards/branch/main/graph/badge.svg)
 
 A structured Todo application built with vanilla JavaScript.
 

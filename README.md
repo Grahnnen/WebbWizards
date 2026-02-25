@@ -93,6 +93,10 @@ Best Practices
 
 SEO
 
+## axe report
+![Axe Test Screenshot](docs/axetest.png)
+
+
 ### Desktop Results
 
 <img width="492" height="133" alt="image" src="https://github.com/user-attachments/assets/ed681afb-cae4-42b6-a1c9-e24911cfd8ba" />

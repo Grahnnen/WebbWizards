@@ -104,12 +104,11 @@ SEO
 ## Members
 
 Team Members & Roles
-Name	Role
-Robin Grahn	
-Lukas Karlsson
-Lisa Ebbhagen
-Liza Hjortling
-Rolf Andersson
+- Robin Grahn	
+- Lukas Karlsson
+- Lisa Ebbhagen
+- Liza Hjortling
+- Rolf Andersson
 
 ## Accessibility Reflection
 

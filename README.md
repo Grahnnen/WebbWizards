@@ -93,6 +93,10 @@ Best Practices
 
 SEO
 
+## axe report
+![Axe Test Screenshot](docs/axetest.png)
+
+
 ### Desktop Results
 
 <img width="492" height="133" alt="image" src="https://github.com/user-attachments/assets/ed681afb-cae4-42b6-a1c9-e24911cfd8ba" />
@@ -103,12 +107,14 @@ SEO
 
 ## Members
 
-Team Members & Roles
+Team Members
 - Robin Grahn	
 - Lukas Karlsson
 - Lisa Ebbhagen
 - Liza Hjortling
 - Rolf Andersson
+
+We practiced rotating roles throughout the project to give every team member experience as both Product Owner and Scrum Master.
 
 ## Accessibility Reflection
 
@@ -139,52 +145,14 @@ Performance optimizations included:
 
 The result is a lightweight, fast-loading application with high audit scores.
 
+# Project Summary 
 
-## Sprint Retrospective
-### Sprint 1 – 2026-02-10
-START
-- sätta upp begränsning för kolumnerna i vår board
-- Skriva allt på engelska
-- Kommentera koden bättre
-- Införskaffa en Definition of Done där det saknas
-  
-STOP
-- Skriva på svenska
-  
-CONTINUE
-- Fortsätt med bra kommunikation
-- Fortsätt med clean code
-  
-Åtgärder till nästa sprint:
-- Skriva på engelska – Ansvarig: Alla
+WebWizard was developed using Scrum over three sprints (Weeks 6–8) with rotating Product Owner and Scrum Master roles. The project progressed from core CRUD functionality to a fully optimized, testable, and installable web application.
 
-### Sprint 2 – 2026-02-17
-START
-- Bättre med daily standup
-  
-STOP 
-- ingenting denna sprint
-  
-CONTINUE
-- kommunikation 
-- fortsätta med clean code
-  
-Åtgärder till nästa sprint:
-- Dokumentera daily standup – Ansvarig: Alla – Deadline: 24/02
+During Sprint 1, the team implemented core features such as creating, editing, deleting, and completing todos, along with a mobile-first responsive layout and semantic HTML.
 
-### Sprint 3 – 2026-02-24
-START
-- Ta bort branches efter merge
-  
-STOP
-- glömma skriva daily standup
-  
-CONTINUE
-- dokumentera löpande
-- fortsätta med clean kod
-- kommunicera
-  
-Medskick till nästa projekt:
-- Dokumentera löpande: daily standup, sprint planning, sprint review mm. 
-- Ta bort branches efter merge
-- Fortsätt med god kommunikation och samarbete
+Sprint 2 focused on extended functionality, including due dates, filtering, star-marking, keyboard navigation, ARIA improvements, unit testing, and CI/CD integration.
+
+Sprint 3 completed DOM and accessibility testing, implemented a Service Worker with offline support, added a Web App Manifest, and optimized Lighthouse scores.
+
+Despite minor challenges such as illness and scheduling conflicts, all final sprint goals were achieved. The result is a performant, accessible, and well-tested application developed using a structured agile workflow.

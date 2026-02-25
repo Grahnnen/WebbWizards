@@ -1,79 +1,184 @@
 /* base styles (mobile first) */
 
+html,
 body {
-    display: grid;
-    grid-template-rows: auto auto 1fr auto auto;
-    min-height: 100vh;     
-    gap: 1rem;
-    padding: 1rem;
-    box-sizing: border-box; 
-    overflow-x: hidden;       
+  height: 100%;
 }
 
-header, h3, footer {
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    display: flex;
-    justify-content: center;
-    padding: 0.75rem;   
+body {
+  margin: 0;
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
 }
 
-/* Center the button on the page */
+
+
+/* ===============================
+   HEADER – Modern Gradient Hero
+================================ */
+
+header {
+  background: linear-gradient(135deg, #373a3a, #06b6d4);
+  padding: 2rem 1rem;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  color: white;
+    box-shadow:
+    0 15px 40px rgba(0, 0, 0, 0.3),
+    0 0 25px rgba(41, 198, 226, 0.3);
+}
+
+/* ===============================
+   ROUND LOGO
+================================ */
+
+.app-logo {
+  width: clamp(90px, 25vw, 140px);
+  aspect-ratio: 1/1;
+  object-fit: cover;
+
+  border-radius: 50%;
+  border: 4px solid rgba(255, 255, 255, 0.8);
+
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.3),
+    0 0 20px rgba(255, 255, 255, 0.4);
+
+  margin-bottom: 1.2rem;
+}
+
+/* ===============================
+   TITLE
+================================ */
+
+.app-title {
+  margin: 0;
+  font-size: clamp(1.8rem, 5vw, 2.2rem);
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+/* Small label */
+
+.team-label {
+  margin-top: 0.8rem;
+  font-size: 0.9rem;
+  opacity: 0.85;
+}
+
+/* ===============================
+   TEAM MEMBERS – Beautiful Chips
+================================ */
+
+.team-members {
+  margin-top: 0.8rem;
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem;
+}
+
+.member {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
+
+  padding: 0.4rem 0.9rem;
+  border-radius: 50px;
+
+  font-size: 0.85rem;
+  font-weight: 600;
+
+  border: 1px solid rgba(255, 255, 255, 0.4);
+
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.member:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.35);
+}
+
+/* ===============================
+   Desktop Enhancement
+================================ */
+
+@media (min-width: 768px) {
+  header {
+    padding: 3rem 2rem;
+  }
+
+  .member {
+    font-size: 0.9rem;
+  }
+}
+
+
+/* Desktop enhancement */
+
+@media (min-width: 768px) {
+  header {
+    padding: 3rem;
+  }
+}
+
+
+/* Center wrapper */
 .button-and-output {
   display: flex;
   justify-content: center;
-  align-items: center;
-  margin: 1rem 0;
+  margin: 1.5rem 0;
 }
 
-/* Add Todo Button */
+/* ===============================
+   Add Todo Button – Modern Pill
+================================ */
+
 #add-todo-btn {
-    padding: 0.5rem 1.25rem; 
-    min-height: 44px;         
-    min-width: 44px;
-    font-size: 1rem;
-    border: none;
-    background-color: #2e7d32;
-    color: white;
-    cursor: pointer;
-  width: clamp(48px, 10vw, 64px);
-  aspect-ratio: 1 / 1;
-  font-size: clamp(1.2rem, 4vw, 2rem);
-
-  border-radius: 50%;
-
-  background: linear-gradient(135deg, #2e7d32, #43a047);
-  color: white;
-  font-weight: 600;
-
+  padding: 0.5rem 1.2rem;
+  border-radius: 10px;
   border: none;
+
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  color: white;
+  background: linear-gradient(135deg, #373a3a, #06b6d4);
+
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+
   cursor: pointer;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  box-shadow: 0 10px 28px rgba(46, 125, 50, 0.4);
+  box-shadow: 0 8px 22px rgba(0,0,0,0.25);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* Hover */
+.plus-icon {
+  width: 22px;
+  height: 22px;
+}
+
 #add-todo-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 14px 36px rgba(46, 125, 50, 0.45);
+  box-shadow: 0 10px 26px rgba(0,0,0,0.3);
 }
 
-/* Active (tap / click) */
 #add-todo-btn:active {
-  transform: translateY(0);
-  box-shadow: 0 6px 18px rgba(46, 125, 50, 0.35);
+  transform: scale(0.97);
 }
 
-/* Focus (accessibility) */
 #add-todo-btn:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 4px rgba(46, 125, 50, 0.35);
+  outline: 3px solid #facc15;
+  outline-offset: 4px;
 }
+
 
 #useroutput {
   min-height: 1.5rem;
@@ -82,211 +187,357 @@ header, h3, footer {
 }
 
 main {
-    padding: 1rem;
-    overflow-y: auto;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    display: flex;
-    flex-direction: column;
-    flex: 1;                  
-    box-sizing: border-box;
+  padding: 1rem;
+  overflow-y: auto;
+
+  border-radius: 3px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  box-sizing: border-box;
 }
 
-/* Todo list container */
+/* =================================
+   TODO LIST CONTAINER
+================================= */
+
 #ulList {
   list-style: none;
   padding: 0;
-  max-width: min(90%, 420px);
-  margin: 1.5rem auto;
+  margin: 4rem auto;
   min-height: 2rem;
-  
+
+  width: 100%;
+  max-width: 420px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
 }
 
-/* =========================
-   Each todo item
-   ========================= */
+/* =================================
+   EACH TODO CARD
+================================= */
 
 #ulList li {
   display: flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.6rem;
+  padding: 0.9rem 1rem;
 
-  padding: 0.7rem 0.9rem;
-  margin-bottom: 0.6rem;
+  background: #cedde4dd -o-repeating-linear-gradient();
+  border-radius: 10px;
 
-  background: #ffffff;
-  border-radius: 14px;
+  box-shadow:
+    0 6px 18px rgba(59, 86, 98, 0.08);
 
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
 }
 
-/* =========================
-   Todo text
-   ========================= */
+/* Hover lift */
+#ulList li:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 10px 22px rgba(0, 0, 0, 0.12);
+}
+
+/* =================================
+   TODO TEXT
+================================= */
 
 #ulList li span {
   flex: 1;
-  font-size: 1rem;
-  color: #333;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: 1.3rem;
+  color: #1e293b;
   word-break: break-word;
-  text-align: center;
+  margin-top: 8px;
 }
 
-/* =========================
-   All buttons
-   ========================= */
+/* Completed state */
+#ulList li.completed span {
+  text-decoration: line-through;
+  color: #64748b;
+}
+
+/* =================================
+   BUTTONS
+================================= */
 
 #ulList li button {
   border: none;
   background: transparent;
   cursor: pointer;
-
-  font-size: 1.1rem;
-  padding: 0.3rem;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: 1.6rem;
+  padding: 0.4rem;
 
   border-radius: 50%;
-  transition: background 0.2s ease, transform 0.1s ease;
+
+  transition:
+    background 0.2s ease,
+    transform 0.1s ease;
 }
 
-/* Hover & active effects */
+/* Hover */
 #ulList li button:hover {
-  background: rgba(0, 0, 0, 0.05);
+  background: rgba(124, 58, 237, 0.1);
+
 }
 
+/* Active */
 #ulList li button:active {
   transform: scale(0.9);
 }
 
-/* Edit button (✍) */
+/* Focus for accessibility */
+#ulList li button:focus-visible {
+  outline: 2px solid #06b6d4;
+  outline-offset: 2px;
+}
+
+/* Edit button */
 #ulList li button:nth-of-type(2) {
-  color: #ff9800;
+  color: #facc15;
 }
 
-/* Delete button (🗑) */
+/* Delete button */
 #ulList li button:nth-of-type(3) {
-  color: #f44336;
+  color: #ef4444;
 }
 
-/* =========================
-   Desktop enhancement
-   ========================= */
+
+
+/* =================================
+   DESKTOP ENHANCEMENT
+================================= */
 
 @media (min-width: 768px) {
+
   #ulList {
-    max-width: 420px;       /* 👈 snygg bredd på desktop */
+    max-width: 520px;
   }
 
   #ulList li {
-    padding: 0.8rem 1.2rem;
+    padding: 1rem 1.3rem;
   }
 }
 
 
-.important-tasks{
-  display: flex;
-  flex-wrap: wrap;
-  gap: 14px;
+
+/* =================================
+   IMPORTANT TASKS CONTAINER
+================================= */
+
+.important-tasks {
+  display: grid;
+  gap: 1rem;
+
   padding: 0;
-  margin: 0;
+  margin: 1.5rem 0;
+
+  grid-template-columns: 1fr;
+  /* Mobil-first */
 }
 
-.important-card{
-  padding: 14px 18px;
-  border: 1px solid #dcdcdc;
-  border-radius: 6px;
-  background: #fff;
-  min-width: 280px;
+/* =================================
+   IMPORTANT CARD
+================================= */
+/* Add small star before every important card */
+
+.important-card::before {
+  content: "⭐";
+  margin-right: 0.6rem;
+  font-size: 0.9rem;
+   
+}
+.important-tasks {
+  max-height: 250px;
+  overflow-y: auto;
 }
 
-.important-card.empty{
-  opacity: 0.7;
+@media (min-width: 768px) {
+  .important-tasks {
+    max-height: 400px;
+  }
 }
+
+
+.important-card {
+  color: #1e293b;
+  background: #cedde4dd -o-repeating-linear-gradient();
+  padding: 1rem 1rem;
+  margin: 0.4rem;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  min-width: none;
+
+  border-radius: 5px;
+  box-shadow:
+    0 6px 18px rgba(0, 0, 0, 0.08);
+   
+
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+/* Hover lift */
+.important-card:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 10px 22px rgba(0, 0, 0, 0.12);
+}
+
+/* Section wrapper */
+
+.important-section {
+  margin-top: 2rem;
+  padding: 3rem;
+ 
+}
+
+/* Heading styling */
+
+.important-section h2 {
+  text-align: center;
+  margin-bottom: 1rem;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: white;
+  background: linear-gradient(135deg, #373a3a, #06b6d4);
+  transition: background 0.2s;
+  padding: 7px;
+}
+
+/* Cards grid */
+
+.important-tasks {
+  display: grid;
+  gap: 0rem;
+  grid-template-columns: 1fr;
+  /* mobil-first */
+}
+
+
+/* Empty state */
+.important-card.empty {
+  opacity: 0.6;
+  border-left-color: #94a3b8;
+  text-align: center;
+}
+
+/* =================================
+   OPTIONAL BOX ELEMENT (cleaner)
+================================= */
 
 #box-element {
-    background-color: #f9f9f9;
-    padding: 1rem;
-    margin: 0.5rem;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+  background: #f1f5f9;
+  padding: 1rem;
+  margin: 1rem 0;
+  border-radius: 16px;
 }
+
+/* =================================
+   FOOTER – cleaner & modern
+================================= */
 
 footer {
-    text-align: center;
-    font-size: 0.9rem;
-    color: #666;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #64748b;
+  padding: 1rem 0;
 }
 
-/* end of base styles */
+/* =================================
+   RESPONSIVE – Tablet
+================================= */
 
-/* adjustments for tablets */
 @media (min-width: 768px) {
 
-    .important-tasks {
-        grid-template-columns: 1fr 1fr;
-    }
+  .important-tasks {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
 }
 
-/* adjustments for desktops */
+/* =================================
+   RESPONSIVE – Desktop
+================================= */
+
 @media (min-width: 1024px) {
 
-    .important-tasks {
-        grid-template-columns: 1fr 1fr 1fr;
-    }
+  .important-tasks {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
 }
 
-/* Style for Date selector */ 
+
+/* Style for Date selector */
 .date-selector-box {
-    position: relative; 
-    text-align: center;
-    margin-bottom: 20px;
+  position: relative;
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 .date-trigger {
-    cursor: pointer;
-    display: inline-block;
-    padding: 10px 20px;
-    background: #f4f4f4;
-    border-radius: 8px;
-    transition: background 0.2s;
-    border: none;        
-    font-size: 1.5rem; 
-    font-weight: bold;
-    font-family: inherit;
-    color: inherit;
-}
-
-.date-trigger:hover {
-    background: #e0e0e0;
+  cursor: pointer;
+  display: inline-block;
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #373a3a, #06b6d4);
+  border-radius: 8px;
+  transition: background 0.2s;
+  border: none;
+  font-size: 1.2rem;
+  font-weight: bold;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  color: white;
+  min-width: 310px;
 }
 
 .date-dropdown {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    background: white;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    list-style: none;
-    padding: 10px 0;
-    width: 200px;
-    z-index: 10; 
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  list-style: none;
+  padding: 10px 0;
+  width: 200px;
+  z-index: 10;
+  text-align: left;
+  font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 .date-dropdown li {
-    padding: 10px 20px;
-    cursor: pointer;
+  padding: 10px 20px;
+  cursor: pointer;
 }
 
 .date-dropdown li:hover {
-    background-color: #f0f0f0;
-    color: #007bff;
+  background-color: #f0f0f0;
+  color: #007bff;
 }
 
 .hidden {
-    display: none;
+  display: none;
+}
+/* ===============================
+   Simple Clean Footer
+================================ */
+
+footer {
+  margin-top: 2rem;
+  padding: 1.5rem 1rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #64748b;
+  background: linear-gradient(135deg, #373a3a, #06b6d4);
+  border-top: 1px solid #e2e8f0;
+  color: white;
 }

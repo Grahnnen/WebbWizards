@@ -21,7 +21,7 @@ test ("That Add Todo modal opens correctly. Make sure that the header is 'Add To
   //Assert
   expect(screen.getByText("Add Todo")).toBeInTheDocument();
   expect(screen.queryByText("Remove")).not.toBeInTheDocument();
-  expect(screen.getByLabelText("New Todo:")).toHaveValue("");
+  expect(screen.getByLabelText("New Todo")).toHaveValue("");
 });
 
 test ("That Edit modal opens correctly. Make sure that the header is 'Edit Todo', delete button is shown and the inputfield is filled with todo text", async () => {
@@ -30,9 +30,9 @@ test ("That Edit modal opens correctly. Make sure that the header is 'Edit Todo'
   modal.openEditModal("Köp mjölk");
 
   // Assert
-  expect(screen.getByText("Edit Todo")).toBeInTheDocument();
+  expect(screen.getByText("Update Todo")).toBeInTheDocument();
   expect(screen.getByText("Remove Todo")).toBeInTheDocument();
-  expect(screen.getByLabelText("New Todo:")).toHaveValue("Köp mjölk");
+  expect(screen.getByLabelText("Edit Todo")).toHaveValue("Köp mjölk");
 });
 
 test ("That the modal is closed when close button is clicked", async () => {
@@ -42,7 +42,7 @@ test ("That the modal is closed when close button is clicked", async () => {
   document.querySelector(".close").click();
 
   // Assert
-  expect(screen.getByText("Edit Todo")).not.toBeVisible();
+  expect(screen.getByText("Update Todo")).not.toBeVisible();
 });
 
 test ("That the modal is closed when save button is clicked in edit modal", async () => {  
@@ -52,12 +52,12 @@ test ("That the modal is closed when save button is clicked in edit modal", asyn
 
   state.editingTodoElement = "Köp mjölk";
 
-  const input = screen.getByLabelText("New Todo:");
+  const input = screen.getByLabelText("Edit Todo");
   input.value = "Köp flera mjölk";
   document.querySelector("#save-todo-btn").click();
     
   // Assert
-  expect(screen.getByText("Edit Todo")).not.toBeVisible();
+  expect(screen.getByText("Update Todo")).not.toBeVisible();
 });
 
 test ("That the modal is closed when escape key is pressed", async () => {

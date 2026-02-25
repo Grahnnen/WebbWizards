@@ -37,7 +37,7 @@ export function renderTodos() {
     }
 // Create check button
     const checkBtn = document.createElement('button');
-    checkBtn.innerHTML = todo.completed ? '✅' : '⬜ ';
+    checkBtn.innerHTML = todo.completed ? '✅' : '⬜';
     checkBtn.setAttribute('aria-label', todo.completed ? 'mark as uncomplete' : 'Mark as complete');
     checkBtn.onclick = () => toggleTodoClicked(todo.text);
     console.log("Rendering todo:", todo.text, "Completed:", todo.completed);
@@ -92,7 +92,7 @@ function renderImportantTodos() {
   starred.forEach(todo => {
     const card = document.createElement('div');
     card.className = 'important-card';
-    card.textContent = `${todo.text} / ${todo.dueDate ?? ''}`.trim();
+    card.textContent = `${todo.text} ${todo.dueDate ?? ''}`.trim();
     dom.importantList.appendChild(card);
   });
 }

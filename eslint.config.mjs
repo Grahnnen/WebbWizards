@@ -6,6 +6,15 @@ import { defineConfig } from "eslint/config";
 
 export default defineConfig([
   {
+    ignores: [
+      "coverage/**",
+      "**/lcov-report/**",
+      "dist/**",
+      "build/**",
+      "node_modules/**",
+    ],
+  },
+  {
     files: ["**/*.{js,mjs,cjs}"],
     plugins: { js },
     extends: ["js/recommended"],
@@ -23,13 +32,16 @@ export default defineConfig([
     }
   },
   {
-    files: ["**/*.test.js", "**/__tests__/**/*.js"],
-    plugins: { jest },
-    languageOptions: {
-      globals: globals.jest
+  files: ["jest.setup.js", "**/*.test.js", "**/__tests__/**/*.js"],
+  plugins: { jest },
+  languageOptions: {
+    globals: {
+      ...globals.jest,
+      ...globals.node,
     },
-    rules: {
-      ...jest.configs.recommended.rules
-    }
-  }
+  },
+  rules: {
+    ...jest.configs.recommended.rules,
+  },
+}
 ]);

@@ -116,14 +116,10 @@ Accessibility was treated as a core requirement rather than an afterthought.
 
 Implemented practices:
 
-- Semantic HTML landmarks (<main>, <header>, <section>)
-
+- Semantic HTML landmarks
 - ARIA labels where appropriate
-
 - Keyboard navigation support
-
 - Focus management within modal
-
 - Automated accessibility testing with jest-axe
 
 Key insight:

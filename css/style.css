@@ -188,7 +188,6 @@ header {
 
 main {
   padding: 1rem;
-  overflow-y: auto;
 
   border-radius: 3px;
   display: flex;
@@ -204,7 +203,7 @@ main {
 #ulList {
   list-style: none;
   padding: 0;
-  margin: 4rem auto;
+  margin: 1rem auto;
   min-height: 2rem;
 
   width: 100%;

@@ -147,34 +147,43 @@ START
 - Skriva allt på engelska
 - Kommentera koden bättre
 - Införskaffa en Definition of Done där det saknas
+  
 STOP
 - Skriva på svenska
+  
 CONTINUE
 - Fortsätt med bra kommunikation
 - Fortsätt med clean code
+  
 Åtgärder till nästa sprint:
 - Skriva på engelska – Ansvarig: Alla
 
 ### Sprint 2 – 2026-02-17
 START
 - Bättre med daily standup
+  
 STOP 
 - ingenting denna sprint
+  
 CONTINUE
 - kommunikation 
 - fortsätta med clean code
+  
 Åtgärder till nästa sprint:
 - Dokumentera daily standup – Ansvarig: Alla – Deadline: 24/02
 
 ### Sprint 3 – 2026-02-24
 START
 - Ta bort branches efter merge
+  
 STOP
 - glömma skriva daily standup
+  
 CONTINUE
 - dokumentera löpande
 - fortsätta med clean kod
 - kommunicera
+  
 Medskick till nästa projekt:
 - Dokumentera löpande: daily standup, sprint planning, sprint review mm. 
 - Ta bort branches efter merge

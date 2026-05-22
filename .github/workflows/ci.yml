@@ -38,6 +38,10 @@ jobs:
       - name: Run linter
         run: npm run lint
       
+      # Skapa fejkad env.js för tester
+      - name: Create fake env.js
+        run: cp js/env.example.js js/env.js
+      
       # Kör tester
       - name: Run tests
         run: npm test

@@ -39,7 +39,9 @@ export function setupDOM() {
 
           <label for="new-todo-due-date">Due Date:</label>
           <input type="date" id="new-todo-due-date">
-
+          <button id="generate-description-btn">Generate Description</button>
+          <div id="loading-spinner" class="hidden"></div>
+          <span id="btn-text">Generate Description</span>
           <button id="save-todo-btn">Save Todo</button>
           <button id="remove-todo-btn" class="modal-removebtn">Remove Todo</button>
         </div>

@@ -8,6 +8,9 @@ export function initDom() {
   dom.dueDate = document.getElementById('new-todo-due-date');
 
   dom.addbtn = document.getElementById('add-todo-btn');
+  dom.generateDescBtn = document.getElementById('generate-description-btn');
+  dom.loadingSpinner = document.getElementById('loading-spinner');
+  dom.generateDescBtnText = document.getElementById('btn-text');
   dom.savebtn = document.getElementById('save-todo-btn');
   dom.removebtn = document.getElementById('remove-todo-btn');
 
@@ -15,6 +18,7 @@ export function initDom() {
   dom.importantList = document.getElementById('importantList');
   dom.useroutput = document.getElementById('useroutput');
   dom.todoError = document.getElementById('todo-error');
+  dom.descError = document.getElementById('desc-error');
 
   dom.modal = document.getElementById('myModal');
   dom.closeBtn = document.getElementsByClassName('close')[0];

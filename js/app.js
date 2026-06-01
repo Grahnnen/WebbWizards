@@ -1,9 +1,9 @@
-import { state, setSelectedDate } from './state.js';
+import { state, setSelectedDate, loginState } from './state.js';
+import { initLogin } from './ui/login.js';
 import { loadTodos } from './storage/todoStorage.js';
 import { renderTodos } from './ui/todoList.js';
 import { setupModal } from './ui/modal.js';
-import { initDom } from './ui/dom.js';
-
+import { dom, initDom } from './ui/dom.js';
 
 //Register serviceworker
 if ("serviceWorker" in navigator) {
@@ -14,6 +14,39 @@ if ("serviceWorker" in navigator) {
   });
 }
 
+function startApp() {
+  // Initialize DOM references
+  initDom();
+  //check if we have a saved token in localStorage to determine if the user is already logged in
+ const savedToken = localStorage.getItem('jwtToken');
+  if (savedToken) {
+    loginState(true, savedToken);
+  }
+  //Control login modal visibility based on login state
+  if (!state.isLoggedIn) {
+    // Show login modal if not logged in
+    dom.loginmodal.classList.remove('hidden');
+    //initialize login form logic
+    initLogin(startApp);
+  } else {
+    // Hide login modal if logged in
+    dom.loginmodal.classList.add('hidden');
+    
+    console.log("We are logged in!");
+    initializeApp();
+  }
+}
+
+function initializeApp() {
+  generateDateOptions();
+  state.todos = loadTodos();
+  renderTodos();
+  setupModal();
+  setupDateDropdownListeners();
+}
+
+//Start the app
+document.addEventListener('DOMContentLoaded', startApp)
 // this is the main entry point for our app, where we will initialize the state,
 //  load todos from storage, and set up the UI components such as the todo list and modal
 
@@ -59,12 +92,7 @@ function generateDateOptions() {
 }
 
 
-document.addEventListener('DOMContentLoaded', () => {
-  generateDateOptions();
-  initDom();
-  state.todos = loadTodos();
-  renderTodos();
-  setupModal();
+
 
   //Date selection logic
   const dateTrigger = document.querySelector('#today-heading');

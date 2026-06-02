@@ -3,10 +3,11 @@
 ![CI](https://github.com/Grahnnen/WebbWizards/actions/workflows/ci.yml/badge.svg)
 ![codecov](https://codecov.io/gh/Grahnnen/WebbWizards/branch/main/graph/badge.svg)
 
-A structured Todo application built with vanilla JavaScript.
 
-This project focuses on clean architecture, accessibility, performance, and automated testing without using frontend frameworks.
+**WebbWizard** is part of a fullstack project. It is a structured Todo application built with vanilla JavaScript. This project focuses on clean architecture, accessibility, performance, and automated testing without using frontend frameworks. 
 
+The purpose of the app is to create structure in everyday life using a todo list. Users can get AI-generated descriptions for todos as well as random quotes (ZenQuotes).
+The app is linked to a backend, to see that project click here: [DatabaseDrivers Backend](https://github.com/RoffeRuff42/DatabaseDrivers) 
 ---
 
 ## Project Description

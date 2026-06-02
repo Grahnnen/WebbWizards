@@ -12,10 +12,10 @@ import { toggleTodo, removeTodo } from '../logic/todoLogic.js';
 export function renderTodos() {
   dom.todolist.innerHTML = '';
 // Loop through todos and create list items
-  const filteredTodos = state.selectedDate === 'all' // If 'all' is selected, show all todos, otherwise filter by selected date
+const filteredTodos = Array.isArray(state.selectedDate) && state.selectedDate === 'all' // If 'all' is selected, show all todos, otherwise filter by selected date
     ? state.todos
-    : state.todos.filter(todo => todo.dueDate === state.selectedDate);
-
+    : state.todos.filter(todo => todo.dueDate === state.selectedDate)
+    
   // Sort todos by due date, with those without a due date at the top
   filteredTodos.sort((a, b) => {
   if (!a.dueDate && b.dueDate) return -1;

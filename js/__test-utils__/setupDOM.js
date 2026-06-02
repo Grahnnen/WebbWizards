@@ -25,7 +25,28 @@ export function setupDOM() {
       </div>
 
       <ul id="ulList"></ul>
-
+      <div id="login-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+            <div class="modal-content">
+                <h2 id="modal-login-title" class="modal-title">Login to WebbWizards Todo App</h2>
+                <form id="login-form">
+                    <label for="login-username">Username</label>
+                    <input type="text" id="login-username" placeholder="Enter username" aria-required="true"
+                        aria-describedby="login-username-error">
+                    <span id="login-username-error" class="error-message" aria-live="polite"></span>
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" placeholder="Enter password" aria-required="true"
+                        aria-describedby="login-password-error">
+                    <span id="login-password-error" class="error-message" aria-live="polite"></span>
+                    <div class="modal-actions">
+                        <button id="login-btn">
+                            <span id="login-btn-text">Login</span>
+                            <div id="loading-spinner" class="hidden"></div>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
       <div id="myModal" class="modal">
         <div class="modal-content">
           <span class="close" aria-label="Stäng modal">&times;</span>

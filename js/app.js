@@ -14,7 +14,7 @@ if ("serviceWorker" in navigator) {
   });
 }
 
-function startApp() {
+async function startApp() {
   // Initialize DOM references
   console.log("1. startApp har kickat igång!");
   initDom();
@@ -43,13 +43,13 @@ function startApp() {
     // Hide login modal if logged in
     dom.loginmodal.style.display = 'none';
     console.log("We are logged in!");
-    initializeApp();
+    await initializeApp();
   }
 }
 
-function initializeApp() {
+async function initializeApp() {
   generateDateOptions();
-  state.todos = loadTodos();
+  state.todos = await loadTodos();
   renderTodos();
   setupModal();
   setupDateDropdownListeners();

@@ -25,7 +25,7 @@ export function setupDOM() {
       </div>
 
       <ul id="ulList"></ul>
-      <div id="login-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <div id="login-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-login-title">
             <div class="modal-content">
                 <h2 id="modal-login-title" class="modal-title">Login to WebbWizards Todo App</h2>
                 <form id="login-form">

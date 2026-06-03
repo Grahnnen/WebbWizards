@@ -23,4 +23,9 @@ export function initDom() {
   dom.modal = document.getElementById('myModal');
   dom.closeBtn = document.getElementsByClassName('close')[0];
   dom.modaltitle = document.getElementById('modal-title');
+
+  dom.loginmodal = document.getElementById('login-modal');
+  dom.loginUsername = document.getElementById('login-username');
+  dom.loginPassword = document.getElementById('login-password');
+  dom.modallogintitle = document.getElementById('modal-login-title');
 };

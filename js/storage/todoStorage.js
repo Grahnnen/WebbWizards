@@ -1,41 +1,51 @@
-// This file handles loading and saving todos to localStorage
+import { API_BACKEND_TODO_BASE_URL } from '../env.js';
 
-// Handles loading and saving todos to localStorage
-const STORAGE_KEY = 'todos';
-// Loads todos from localStorage, returns an empty array if none found
-export function loadTodos() {
+// Loads todos from backend storage, returns an empty array if none found or on error
+export async function loadTodos() {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
+    const token = localStorage.getItem('jwtToken');
+    const response = await fetch(`${API_BACKEND_TODO_BASE_URL}/api/v1/todos`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+    });
 
-    if (!raw) return [];
+    if (!response.ok) {
+      throw new Error('Failed to load todos from backend.');
+    }
 
-    const parsed = JSON.parse(raw);
+    const data = await response.json();
+    if (!Array.isArray(data)) return [];
 
-    if (!Array.isArray(parsed)) return [];
-
-     return parsed.filter(isValidTodo);
-
+    return data.filter(isValidTodo);
   } catch (error) {
-    console.error("Error loading todos:", error);
+    console.error('Error loading todos:', error);
     return [];
   }
 }
 
-export function saveTodos(todos) {
+export async function saveTodos(todos) {
   if (!Array.isArray(todos)) return;
 
   const validTodos = todos.filter(isValidTodo);
-
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(validTodos));
+  await fetch(`${API_BACKEND_TODO_BASE_URL}/api/v1/todos`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('jwtToken')}`,
+    },
+    body: JSON.stringify(validTodos),
+  });
 }
-
-// todoStorage.js
 
 function isValidTodo(todo) {
   return (
-    typeof todo === "object" &&
-    typeof todo.text === "string" &&
-    typeof todo.completed === "boolean"
+    typeof todo === 'object' &&
+    todo !== null &&
+    typeof todo.text === 'string' &&
+    typeof todo.completed === 'boolean'
   );
 }
 

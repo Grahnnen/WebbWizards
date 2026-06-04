@@ -3,7 +3,7 @@ import { state } from '../state.js';
 import { saveUpdatedTodo } from '../storage/todoStorage.js';
 import { openEditModal } from './modal.js';
 import { toggleTodo, removeTodo, toggleStar } from '../logic/todoLogic.js';
-import { API_BACKEND_TODO_BASE_URL } from '../env.js';
+import { ENV } from '../env.js';
 
 //this is the file where we will handle rendering the list of todos in the UI, 
 // as well as any interactions related to the todo list such as toggling completion or deleting todos
@@ -154,7 +154,7 @@ async function removeTodoClicked(todo) {
 
   try {
     if (todo.id) {
-      const response = await fetch(`${API_BACKEND_TODO_BASE_URL}/api/v1/todos/${todo.id}`, {
+      const response = await fetch(`${ENV.API_BACKEND_TODO_BASE_URL}/api/v1/todos/${todo.id}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('jwtToken')}`,

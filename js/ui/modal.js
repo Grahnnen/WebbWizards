@@ -3,7 +3,7 @@ import { state } from "../state.js";
 import { loadingState } from "../state.js";
 import { saveTodos, saveUpdatedTodo } from "../storage/todoStorage.js";
 import { renderTodos } from "./todoList.js";
-import { API_BACKEND_TODO_BASE_URL } from "../env.js";
+import { ENV } from "../env.js";
 // this is the file where we will handle the modal for adding and editing todos,
 // including opening, closing, and saving from the modal
 
@@ -68,7 +68,7 @@ async function generateDescription() {
   descError.textContent = "";
 
   try {
-    var response = await fetch(`${API_BACKEND_TODO_BASE_URL}/generate-description`, {
+    var response = await fetch(`${ENV.API_BACKEND_TODO_BASE_URL}/generate-description`, {
       method: "POST",
       headers: { "Content-Type": "application/json"},
       body: JSON.stringify({title: dom.inputfield.value.trim()}),
@@ -149,7 +149,7 @@ async function removeFromModal() {
   }
 
   try {
-    const response = await fetch(`${API_BACKEND_TODO_BASE_URL}/api/v1/todos/${todo.id}`, {
+    const response = await fetch(`${ENV.API_BACKEND_TODO_BASE_URL}/api/v1/todos/${todo.id}`, {
     method: 'DELETE',
     headers: {
       'Authorization': `Bearer ${localStorage.getItem('jwtToken')}`,

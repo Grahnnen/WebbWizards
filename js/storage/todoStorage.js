@@ -1,4 +1,4 @@
-import { API_BACKEND_TODO_BASE_URL } from '../env.js';
+import { ENV } from '../env.js';
 
 function isValidTodo(todo) {
   return (
@@ -13,7 +13,7 @@ function isValidTodo(todo) {
 export async function loadTodos() {
   try {
     const token = localStorage.getItem('jwtToken');
-    const response = await fetch(`${API_BACKEND_TODO_BASE_URL}/api/v1/todos`, {
+    const response = await fetch(`${ENV.API_BACKEND_TODO_BASE_URL}/api/v1/todos`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -44,7 +44,7 @@ export async function saveTodos(todos) {
   const todoToSave = validTodos[validTodos.length - 1];
 
   try {
-    const response = await fetch(`${API_BACKEND_TODO_BASE_URL}/api/v1/todos`, {
+    const response = await fetch(`${ENV.API_BACKEND_TODO_BASE_URL}/api/v1/todos`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -78,7 +78,7 @@ export async function saveUpdatedTodo(todo) {
   }
 
   try {
-    const response = await fetch(`${API_BACKEND_TODO_BASE_URL}/api/v1/todos/${todo.id}`, {
+    const response = await fetch(`${ENV.API_BACKEND_TODO_BASE_URL}/api/v1/todos/${todo.id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

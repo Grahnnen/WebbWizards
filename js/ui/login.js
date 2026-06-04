@@ -1,5 +1,5 @@
 import { loginState } from '../state.js';
-import { API_BACKEND_BASE_URL } from '../env.js'; // Update this to match your backend URL and port
+import { ENV } from '../env.js'; // Update this to match your backend URL and port
 export function initLogin(renderApp) {
   const loginForm = document.getElementById('login-form');
   if (!loginForm) {
@@ -17,7 +17,7 @@ export function initLogin(renderApp) {
       return;
     }
     try {
-      const response = await fetch(`${API_BACKEND_BASE_URL}/api/auth/login`, {
+      const response = await fetch(`${ENV.API_BACKEND_BASE_URL}/api/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),

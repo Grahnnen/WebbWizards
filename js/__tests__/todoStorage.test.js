@@ -1,5 +1,5 @@
 import { loadTodos, saveTodos } from "../storage/todoStorage";
-import { API_BACKEND_TODO_BASE_URL } from "../env.js";
+import { ENV } from "../env.js";
 
 beforeEach(() => {
   localStorage.clear();
@@ -14,7 +14,7 @@ test("returns empty array if backend returns no todos", async () => {
   const result = await loadTodos();
   expect(result).toEqual([]);
   expect(global.fetch).toHaveBeenCalledWith(
-    `${API_BACKEND_TODO_BASE_URL}/api/v1/todos`,
+    `${ENV.API_BACKEND_TODO_BASE_URL}/api/v1/todos`,
     expect.objectContaining({ method: 'GET' })
   );
 });
@@ -26,7 +26,7 @@ test("saves todos to backend", async () => {
   await saveTodos(todos);
 
   expect(global.fetch).toHaveBeenCalledWith(
-    `${API_BACKEND_TODO_BASE_URL}/api/v1/todos`,
+    `${ENV.API_BACKEND_TODO_BASE_URL}/api/v1/todos`,
     expect.objectContaining({
       method: 'POST',
       headers: expect.objectContaining({ 'Content-Type': 'application/json' }),

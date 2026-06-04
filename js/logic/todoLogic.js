@@ -14,7 +14,6 @@ export function toggleTodo(todos, todoToToggle) {
       : (t.title || t.text) === (todoToToggle.title || todoToToggle.text);
 
     if (isMatch) {
-      // Vänd på statusen och se till att både isDone och completed hänger med
       const newStatus = !(t.isDone || t.completed);
       return { 
         ...t, 
@@ -23,6 +22,24 @@ export function toggleTodo(todos, todoToToggle) {
       };
     }
     
+    return t;
+  });
+}
+
+export function toggleStar(todos, todoToToggle) {
+  return todos.map(t => {
+    const isMatch = (todoToToggle.id && t.id) 
+      ? t.id === todoToToggle.id 
+      : (t.title || t.text) === (todoToToggle.title || todoToToggle.text);
+
+    if (isMatch) {
+      const newStarredStatus = !(t.isStarred || t.starred);
+      return { 
+        ...t, 
+        isStarred: newStarredStatus, 
+        starred: newStarredStatus 
+      };
+    }
     return t;
   });
 }

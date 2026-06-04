@@ -1,8 +1,8 @@
 import { dom } from './dom.js';
 import { state } from '../state.js';
-import { saveTodos, saveUpdatedTodo } from '../storage/todoStorage.js';
+import { saveUpdatedTodo } from '../storage/todoStorage.js';
 import { openEditModal } from './modal.js';
-import { toggleTodo, removeTodo } from '../logic/todoLogic.js';
+import { toggleTodo, removeTodo, toggleStar } from '../logic/todoLogic.js';
 import { API_BACKEND_TODO_BASE_URL } from '../env.js';
 
 //this is the file where we will handle rendering the list of todos in the UI, 
@@ -55,7 +55,7 @@ const filteredTodos = state.selectedDate === 'all' // If 'all' is selected, show
     const starBtn = document.createElement('button');
     starBtn.innerHTML = isTodoStarred ? '⭐' : '☆';
     starBtn.setAttribute('aria-label', isTodoStarred ? 'Unstar todo' : 'Star todo');
-    starBtn.onclick = () => toggleStar(todo);
+    starBtn.onclick = () => toggleStarClicked(todo);
     
 // Create edit button
     const editBtn = document.createElement('button');
@@ -105,36 +105,40 @@ function renderImportantTodos() {
 async function toggleTodoClicked(todo) {
   if (!todo) return;
 
-  todo.isDone = !todo.isDone || !todo.completed; // Toggle isDone, but also check completed for backward compatibility
-  todo.completed = todo.isDone; // Ensure completed is updated for backward compatibility
+  const previousTodos = [...state.todos]; // Save previous state for potential rollback]
+  
+  state.todos = toggleTodo(state.todos, todo); // Update state with toggled todo
+  renderTodos(); // Optimistically update UI
 
+  const updatedTodo = state.todos.find(t => t.id && t.id === todo.id || (t.title === todo.title));
+  
   try {
-    if (todo.id) {
-      await saveUpdatedTodo(todo);
+    if (updatedTodo && updatedTodo.id) {
+      await saveUpdatedTodo(updatedTodo);
     }
-    renderTodos();
   } catch (error) {
     console.error('Error updating todo:', error);
-    todo.isDone = !todo.isDone; // Revert the change if saving fails
-    todo.completed = todo.isDone; // Revert completed as well
+    state.todos = previousTodos; // Revert to previous state
     renderTodos();
   }
 }
-async function toggleStar(todo) {
+async function toggleStarClicked(todo) {
   if (!todo) return;
 
-  todo.isStarred = !todo.isStarred || !todo.starred; // Toggle isStarred, but also check starred for backward compatibility
-  todo.starred = todo.isStarred; // Ensure starred is updated for backward compatibility
-  
+  const previousTodos = [...state.todos]; // Save previous state for potential rollback
+
+  state.todos = toggleStar(state.todos, todo); // Update state with toggled star
+  renderTodos(); // Optimistically update UI
+
+  const updatedTodo = state.todos.find(t => t.id && t.id === todo.id || (t.title === todo.title));
+    
   try {
-    if (todo.id) {
-      await saveUpdatedTodo(todo);
+    if (updatedTodo && updatedTodo.id) {
+      await saveUpdatedTodo(updatedTodo);
     }
-    renderTodos();
   } catch (error) {
     console.error('Error starring todo:', error);
-    todo.isStarred = !todo.isStarred;
-    todo.starred = todo.isStarred;
+    state.todos = previousTodos; // Revert to previous state
     renderTodos();
   }
 }
@@ -144,6 +148,10 @@ async function removeTodoClicked(todo) {
 
   if (!confirm("Are you sure you want to delete this todo?")) return;
   
+  const previousTodos = [...state.todos]; // Save previous state for potential rollback
+  state.todos = removeTodo(state.todos, todo); // Update state by removing the todo
+  renderTodos(); // Optimistically update UI
+
   try {
     if (todo.id) {
       const response = await fetch(`${API_BACKEND_TODO_BASE_URL}/api/v1/todos/${todo.id}`, {
@@ -157,11 +165,10 @@ async function removeTodoClicked(todo) {
         throw new Error('Failed to delete todo');
       }
     }
-
-    state.todos = state.todos.filter(t => t.id !== todo.id || (t.text !== todo.text && t.title !== todo.title));
-    renderTodos();
   } catch (error) {
     console.error('Error deleting todo:', error);
     alert('Failed to delete todo, please try again later.');
+    state.todos = previousTodos; // Revert to previous state
+    renderTodos();
   }
 }

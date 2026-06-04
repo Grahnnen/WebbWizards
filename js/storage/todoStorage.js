@@ -44,16 +44,19 @@ export async function saveTodos(todos) {
   const todoToSave = validTodos[validTodos.length - 1];
 
   try {
-    const response =await fetch(`${API_BACKEND_TODO_BASE_URL}/api/v1/todos`, {
+    const response = await fetch(`${API_BACKEND_TODO_BASE_URL}/api/v1/todos`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${localStorage.getItem('jwtToken')}`,
       },
       body: JSON.stringify({
-          title: todoToSave.title,  // Se till att dessa matchar fälten i CreateTodoDto exakt
-          isDone: todoToSave.isDone || false 
-      })     
+        title: todoToSave.title,
+        description: todoToSave.description || '',
+        dueDate: todoToSave.dueDate || '',
+        isDone: todoToSave.isDone || false,
+        isStarred: todoToSave.isStarred || false,
+      }),
     });
 
     if (!response.ok) {
@@ -75,16 +78,19 @@ export async function saveUpdatedTodo(todo) {
   }
 
   try {
-    const response =await fetch(`${API_BACKEND_TODO_BASE_URL}/api/v1/todos/${todo.id}`, {
+    const response = await fetch(`${API_BACKEND_TODO_BASE_URL}/api/v1/todos/${todo.id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${localStorage.getItem('jwtToken')}`,
       },
       body: JSON.stringify({
-          title: todo.title,
-          isDone: todo.isDone || false
-      })     
+        title: todo.title,
+        description: todo.description || '',
+        dueDate: todo.dueDate || '',
+        isDone: todo.isDone || false,
+        isStarred: todo.isStarred || todo.starred || false,
+      }),
     });
 
     if (!response.ok) {

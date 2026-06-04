@@ -20,7 +20,7 @@ test("returns empty array if backend returns no todos", async () => {
 });
 
 test("saves todos to backend", async () => {
-  const todos = [{ text: "Test", completed: false }];
+  const todos = [{ title: "Test", isDone: false }];
   global.fetch.mockResolvedValueOnce({ ok: true, json: async () => [] });
 
   await saveTodos(todos);
@@ -30,13 +30,19 @@ test("saves todos to backend", async () => {
     expect.objectContaining({
       method: 'POST',
       headers: expect.objectContaining({ 'Content-Type': 'application/json' }),
-      body: JSON.stringify(todos),
+      body: JSON.stringify({
+        title: todos[0].title,
+        description: '',
+        dueDate: '',
+        isDone: todos[0].isDone,
+        isStarred: false,
+      }),
     })
   );
 });
 
 test("loads todos from backend", async () => {
-  const todos = [{ text: "Stored todo", completed: true }];
+  const todos = [{ title: "Stored todo", isDone: true }];
   global.fetch.mockResolvedValueOnce({ ok: true, json: async () => todos });
 
   const result = await loadTodos();
@@ -64,12 +70,12 @@ test("returns empty array if backend response is not an array", async () => {
 
 test("filters out invalid todo objects from backend response", async () => {
   const badData = [
-    { text: "Valid", completed: true },
+    { title: "Valid", isDone: true },
     { wrong: true },
-    { text: 123, completed: false },
+    { title: 123, isDone: false },
   ];
   global.fetch.mockResolvedValueOnce({ ok: true, json: async () => badData });
 
   const result = await loadTodos();
-  expect(result).toEqual([{ text: "Valid", completed: true }]);
+  expect(result).toEqual([{ title: "Valid", isDone: true }]);
 });

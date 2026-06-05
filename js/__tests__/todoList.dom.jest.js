@@ -11,6 +11,7 @@ beforeEach(async () => {
     initDom();
     todoList = await import("../ui/todoList.js");
     state = (await import("../state.js")).state;
+    state.selectedDate = 'all'; // Ensure selectedDate is set to 'all' for tests
     localStorage.clear();
 });
 
@@ -71,6 +72,8 @@ test ("That todos gets a fullfilled yellow star at click.", async () => {
         { id: 1, text: "Deadline: projekt i team", completed: false, dueDate: "2026-02-25", starred: false },    
     ];
     todoList.renderTodos();
+
+    screen.debug();
 
     //Act
     screen.getByRole("button", { name: "Star todo" }).click();

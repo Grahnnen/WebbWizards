@@ -11,16 +11,19 @@ beforeEach(() => {
 
 test("That the app renders initial todos from storage", async () => {
   //Arrange
-  localStorage.setItem("todos", JSON.stringify([
-    { id: 1, text: "Köp mjölk", completed: false }
-  ]));
-  
-  state.selectedDate = "all" 
+  const todos = [{ id: 1, title: "Köp mjölk", isDone: false }];
+  localStorage.setItem("jwtToken", "test-token");
+  state.selectedDate = "all";
+
+  global.fetch = jest.fn(() =>
+    Promise.resolve({ ok: true, json: async () => todos })
+  );
+
   await import("../app.js");
   
   //Act
   document.dispatchEvent(new Event("DOMContentLoaded"));
 
   //Assert
-  expect(screen.getByText("Köp mjölk")).toBeInTheDocument();
+  expect(await screen.findByText("Köp mjölk")).toBeInTheDocument();
 });

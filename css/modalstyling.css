@@ -1,5 +1,5 @@
 /* ===============================
-   MODAL ACTIONS (Save + Remove)
+   MODAL ACTIONS (Save + Generate + Remove)
 ================================ */
 
 .modal-actions {
@@ -93,6 +93,94 @@
   transform: scale(0.97);
 }
 
+/* ===============================
+   GENERATE BUTTON
+================================ */
+
+#generate-description-btn {
+  padding: 0.8rem 1rem;
+
+  border: none;
+  border-radius: 8px;
+
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-family: inherit;
+
+  color: #0A4A55;
+  background: linear-gradient(135deg, #E8FBFF, #BDEFF7);
+
+  cursor: pointer;
+
+  box-shadow: 0 6px 18px rgba(204, 242, 247, 0.35);
+
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#generate-description-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 26px rgba(204, 242, 247, 0.45);
+}
+
+#generate-description-btn:active {
+  transform: scale(0.97);
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* creates circle */
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 3px solid #ccc;      
+  border-top: 3px solid #007bff; 
+  border-radius: 50%;          
+  /* Tells the browser to run the 'spin' animation infinitely */
+  animation: spin 1s linear infinite; 
+  display: inline-block;
+  margin-left: 10px;      
+}
+
+/* Definition of the spin animation */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* ===============================
+   LOGIN BUTTON
+================================ */
+
+#login-btn {
+  padding: 0.8rem 1rem;
+
+  border: none;
+  border-radius: 8px;
+
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-family: inherit;
+
+  color: white;
+  background: linear-gradient(135deg, #373a3a, #06b6d4);
+
+  cursor: pointer;
+
+  box-shadow: 0 6px 18px rgba(6, 182, 212, 0.35);
+
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#login-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 26px rgba(6, 182, 212, 0.45);
+}
+
+#login-btn:active {
+  transform: scale(0.97);
+}
 
 /* ===============================
    MODAL BACKDROP
@@ -149,6 +237,8 @@
   border-radius: 12px;
 
   color: white;
+
+  text-align: center;
 }
 
 
@@ -173,6 +263,14 @@
 .modal-content input:focus {
   border-color: #06b6d4;
   box-shadow: 0 0 0 4px rgba(6, 182, 212, 0.15);
+}
+
+#login-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  gap: 1.2rem;         
+  width: 100%;       
 }
 
 

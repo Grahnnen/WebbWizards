@@ -1,61 +1,81 @@
 import { loadTodos, saveTodos } from "../storage/todoStorage";
+import { ENV } from "../env.js";
 
 beforeEach(() => {
   localStorage.clear();
+  global.fetch = jest.fn(() =>
+    Promise.resolve({ ok: true, json: async () => [] })
+  );
 });
 
-test("returns empty array if no todos in storage", () => {
-  const result = loadTodos();
+test("returns empty array if backend returns no todos", async () => {
+  global.fetch.mockResolvedValueOnce({ ok: true, json: async () => [] });
+
+  const result = await loadTodos();
   expect(result).toEqual([]);
+  expect(global.fetch).toHaveBeenCalledWith(
+    `${ENV.API_BACKEND_TODO_BASE_URL}/api/v1/todos`,
+    expect.objectContaining({ method: 'GET' })
+  );
 });
 
-test("saves todos to localStorage", () => {
-  const todos = [
-    { text: "Test", completed: false }
-  ];
+test("saves todos to backend", async () => {
+  const todos = [{ title: "Test", isDone: false }];
+  global.fetch.mockResolvedValueOnce({ ok: true, json: async () => [] });
 
-  saveTodos(todos);
+  await saveTodos(todos);
 
-  const stored = JSON.parse(localStorage.getItem("todos"));
-  expect(stored).toEqual(todos);
+  expect(global.fetch).toHaveBeenCalledWith(
+    `${ENV.API_BACKEND_TODO_BASE_URL}/api/v1/todos`,
+    expect.objectContaining({
+      method: 'POST',
+      headers: expect.objectContaining({ 'Content-Type': 'application/json' }),
+      body: JSON.stringify({
+        title: todos[0].title,
+        description: '',
+        dueDate: '',
+        isDone: todos[0].isDone,
+        isStarred: false,
+      }),
+    })
+  );
 });
 
-test("loads todos from localStorage", () => {
-  const todos = [
-    { text: "Stored todo", completed: true }
-  ];
+test("loads todos from backend", async () => {
+  const todos = [{ title: "Stored todo", isDone: true }];
+  global.fetch.mockResolvedValueOnce({ ok: true, json: async () => todos });
 
-  localStorage.setItem("todos", JSON.stringify(todos));
-
-  const result = loadTodos();
-
+  const result = await loadTodos();
   expect(result).toEqual(todos);
 });
 
-test("returns empty array if JSON is invalid", () => {
-  localStorage.setItem("todos", "not valid json");
+test("returns empty array if backend JSON is invalid", async () => {
+  global.fetch.mockResolvedValueOnce({
+    ok: true,
+    json: async () => {
+      throw new SyntaxError('Unexpected token');
+    },
+  });
 
-  expect(loadTodos()).toEqual([]);
+  const result = await loadTodos();
+  expect(result).toEqual([]);
 });
 
-test("returns empty array if stored value is not array", () => {
-  localStorage.setItem("todos", JSON.stringify("hello"));
+test("returns empty array if backend response is not an array", async () => {
+  global.fetch.mockResolvedValueOnce({ ok: true, json: async () => "hello" });
 
-  expect(loadTodos()).toEqual([]);
+  const result = await loadTodos();
+  expect(result).toEqual([]);
 });
 
-test("filters out invalid todo objects", () => {
+test("filters out invalid todo objects from backend response", async () => {
   const badData = [
-    { text: "Valid", completed: true },
+    { title: "Valid", isDone: true },
     { wrong: true },
-    { text: 123, completed: false }
+    { title: 123, isDone: false },
   ];
+  global.fetch.mockResolvedValueOnce({ ok: true, json: async () => badData });
 
-  localStorage.setItem("todos", JSON.stringify(badData));
-
-  const result = loadTodos();
-
-  expect(result).toEqual([
-    { text: "Valid", completed: true }
-  ]);
+  const result = await loadTodos();
+  expect(result).toEqual([{ title: "Valid", isDone: true }]);
 });

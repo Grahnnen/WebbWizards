@@ -1,9 +1,9 @@
 import { dom, initDom } from "./dom.js";
 import { state } from "../state.js";
 import { loadingState } from "../state.js";
-import { saveTodos } from "../storage/todoStorage.js";
+import { saveTodos, saveUpdatedTodo } from "../storage/todoStorage.js";
 import { renderTodos } from "./todoList.js";
-import { API_BACKEND_BASE_URL } from "../env.js"; // Update this to match your backend URL and port
+import { ENV } from "../env.js";
 // this is the file where we will handle the modal for adding and editing todos,
 // including opening, closing, and saving from the modal
 
@@ -11,8 +11,13 @@ export function setupModal() {
   initDom();
   dom.addbtn.onclick = openAddModal;
   dom.generateDescBtn.onclick = generateDescription;
-  dom.savebtn.onclick = saveFromModal;
-  dom.removebtn.onclick = removeFromModal;
+  dom.savebtn.onclick = async (e) => {
+    if (e) e.preventDefault();
+    await saveFromModal();
+  };
+  dom.removebtn.onclick = async () => {
+    await removeFromModal();
+  };
   dom.closeBtn.onclick = closeModal;
 
   window.onclick = (e) => {
@@ -63,7 +68,7 @@ async function generateDescription() {
   descError.textContent = "";
 
   try {
-    var response = await fetch(`${API_BACKEND_BASE_URL}/generate-description`, {
+    var response = await fetch(`${ENV.API_BACKEND_TODO_BASE_URL}/generate-description`, {
       method: "POST",
       headers: { "Content-Type": "application/json"},
       body: JSON.stringify({title: dom.inputfield.value.trim()}),
@@ -87,48 +92,91 @@ async function generateDescription() {
   }
 }
 
-function saveFromModal() {
+async function saveFromModal() {
   const text = dom.inputfield.value.trim();
   const desc = dom.descfield.value.trim();
   const dueDate = dom.dueDate.value;
 
   if (!text) {
-    dom.todoError.textContent = "Du måste ange en todo.";
+    dom.todoError.textContent = "You must enter a todo.";
     return;
   }
 
-  if (state.editingTodoElement) {
-    const todo = state.todos.find((t) => t.text === state.editingTodoElement);
-    todo.text = text;
-    todo.description = desc;
-    todo.dueDate = dueDate;
-  } else {
-    state.todos.push({
-      text,
-      description: desc,
-      dueDate,
-      completed: false,
-      starred: false,
-    });
+  try {
+    if (state.editingTodoElement) {
+      const todo = state.todos.find((t) => (t.title || t.text) === state.editingTodoElement);
+      if(todo) {
+      todo.title = text;
+      todo.description = desc;
+      todo.dueDate = dueDate;
+      await saveUpdatedTodo(todo);
+      }
+    } else {
+      const newTodo = {
+        title: text,
+        description: desc,
+        dueDate,
+        isDone: false,
+        isStarred: false,
+      };
+      state.todos.push(newTodo);   
+      const savedTodo = await saveTodos(state.todos);
+      if (savedTodo && savedTodo.id) {
+        newTodo.id = savedTodo.id; // Assign the returned ID to the local todo object
+      } 
+    }
+
+    renderTodos();
+    closeModal();
+
+} catch (error) {
+    console.error("Error saving todo:", error);
+    dom.todoError.textContent = "Failed to save todo, try again later.";
+  }
+}
+
+async function removeFromModal() {
+ 
+  const todo = state.todos.find((t) => (t.title || t.text) === state.editingTodoElement);
+
+  if (!todo) {
+    console.error("Todo not found.");
+    return;
   }
 
-  saveTodos(state.todos);
-  renderTodos();
-  closeModal();
-}
-function removeFromModal() {
-  state.todos = state.todos.filter((t) => t.text !== state.editingTodoElement);
-  saveTodos(state.todos);
-  renderTodos();
-  closeModal();
+  if(!todo.id || !confirm("Are you sure you want to delete this todo?")) {
+    return;
+  }
+
+  try {
+    const response = await fetch(`${ENV.API_BACKEND_TODO_BASE_URL}/api/v1/todos/${todo.id}`, {
+    method: 'DELETE',
+    headers: {
+      'Authorization': `Bearer ${localStorage.getItem('jwtToken')}`,
+    }
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to delete todo, try again later.");
+  }
+    state.todos = state.todos.filter((t) => t.id !== todo.id);
+
+    renderTodos();
+    closeModal();
+
+  } catch (error) {
+    console.error("Error removing todo:", error);
+    dom.todoError.textContent = "Failed to remove todo, try again later.";
+  }
 }
 
 function closeModal() {
   dom.modal.style.display = "none";
+  if (dom.todoError) dom.todoError.textContent = "";
 }
 
 export function openEditModal(todoText) {
-  const todo = state.todos.find((t) => t.text === todoText);
+  const todo = state.todos.find((t) => (t.title || t.text) === todoText);
   if (!todo) return;
 
   state.editingTodoElement = todoText;
@@ -140,7 +188,7 @@ export function openEditModal(todoText) {
     "Edit Todo";
   document.getElementById("save-todo-btn").textContent = "Update Todo";
 
-  dom.inputfield.value = todo.text;
+  dom.inputfield.value = todo.title || todo.text;
   dom.descfield.value = todo.description || "";
   dom.dueDate.value = todo.dueDate || "";
 

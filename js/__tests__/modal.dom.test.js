@@ -1,4 +1,4 @@
-import { screen } from "@testing-library/dom";
+import { screen, waitFor } from "@testing-library/dom";
 import "@testing-library/jest-dom";
 import { setupDOM } from "../__test-utils__/setupDOM.js";   
 import { state } from "../state.js";
@@ -8,6 +8,8 @@ let modal;
 //Arrange
 beforeEach(async () => {
     setupDOM();
+    global.fetch = jest.fn(() => Promise.resolve({ ok: true, json: async () => ({}) }));
+    global.confirm = jest.fn(() => true);
     await import("../ui/dom.js");
     modal = await import("../ui/modal.js");
     modal.setupModal();
@@ -55,9 +57,7 @@ test ("That the modal is closed when save button is clicked in edit modal", asyn
   const input = screen.getByLabelText("Edit Todo");
   input.value = "Köp flera mjölk";
   document.querySelector("#save-todo-btn").click();
-    
-  // Assert
-  expect(screen.getByText("Update Todo")).not.toBeVisible();
+  await waitFor(() => expect(screen.getByText("Update Todo")).not.toBeVisible());
 });
 
 test ("That the modal is closed when escape key is pressed", async () => {
@@ -76,7 +76,5 @@ test ("That the todo is removed when remove button is clicked in edit modal", as
 
   // Act
   document.querySelector("#remove-todo-btn").click();
-
-  // Assert
-  expect(state.todos.length).toBe(0);
+  await waitFor(() => expect(state.todos.length).toBe(0));
 });

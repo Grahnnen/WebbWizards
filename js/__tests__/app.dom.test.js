@@ -11,7 +11,7 @@ beforeEach(() => {
 
 test("That the app renders initial todos from storage", async () => {
   //Arrange
-  const todos = [{ id: 1, text: "Köp mjölk", completed: false }];
+  const todos = [{ id: 1, title: "Köp mjölk", isDone: false }];
   localStorage.setItem("jwtToken", "test-token");
   state.selectedDate = "all";
 

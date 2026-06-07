@@ -12,7 +12,11 @@ beforeEach(() => {
 test("That the app renders initial todos from storage", async () => {
   //Arrange
   const todos = [{ id: 1, title: "Köp mjölk", isDone: false }];
-  localStorage.setItem("jwtToken", "test-token");
+  const validToken =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9." +
+    "eyJleHAiOjk5OTk5OTk5OTk5fQ." +
+    "signature";
+  localStorage.setItem("jwtToken", validToken);
   state.selectedDate = "all";
 
   global.fetch = jest.fn(() =>

@@ -16,30 +16,41 @@ if ("serviceWorker" in navigator) {
 
 async function startApp() {
   // Initialize DOM references
-  console.log("1. startApp har kickat igång!");
+  console.log("1. startApp is running!");
   initDom();
-  console.log("2. initDom är körd. dom.loginmodal är:", dom.loginmodal);
+  console.log("2. initDom is complete. dom.loginmodal is:", dom.loginmodal);
 
   //check if we have a saved token in localStorage to determine if the user is already logged in
  const savedToken = localStorage.getItem('jwtToken');
- console.log("3. savedToken i localStorage är:", savedToken);
-  if (savedToken) {
+ console.log("3. savedToken in localStorage:", savedToken);
+
+  if (savedToken && !isTokenExpired(savedToken)) {
+    console.log("Saved token is valid, logging in user.");
     loginState(true, savedToken);
+  } else {
+    console.log("No valid token found, user is not logged in.");
+    localStorage.removeItem('jwtToken'); // Remove invalid token if it exists
+
+    if (typeof loginState === 'function' && state.isLoggedIn) {
+      loginState(false, null);
+    }
   }
-  console.log("4. state.isLoggedIn är just nu:", state.isLoggedIn);
+
+  console.log("4. Login state after token check:", state.isLoggedIn);
+
   //Control login modal visibility based on login state
   if (!state.isLoggedIn) {
-    console.log("5. Vi är i IF-blocket (INTE inloggad). Försöker sätta display till flex.");
+    console.log("5. User is not logged in. Showing login modal.");
     if (dom.loginmodal) {
       dom.loginmodal.style.display = 'flex';
-      console.log("6. display=flex har satts på elementet!");
+      console.log("6. display=flex is set!");
     } else {
-      console.log("6. FEL: dom.loginmodal saknas när vi ska sätta display!");      
+      console.log("6. Error: dom.loginmodal is not defined!");      
     }     
     //initialize login form logic
     initLogin(startApp);
   } else {
-    console.log("5. Vi är i ELSE-blocket (ÄR inloggad). Gömmer modal.");    
+    console.log("5. User is logged in. Hiding login modal.");    
     // Hide login modal if logged in
     dom.loginmodal.style.display = 'none';
     console.log("We are logged in!");
@@ -147,4 +158,23 @@ function setupDateDropdownListeners() {
   
 };
 
+function isTokenExpired(token) {
+  if (!token || token === 'null' || token === 'undefined') return true;
 
+  try {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+
+    const { exp } = JSON.parse(jsonPayload);
+    if (!exp) return false; // If there's no exp claim, we can't determine if it's expired, so we assume it's not
+
+    const currentTime = Date.now() / 1000; // Current time in seconds
+    return currentTime >= exp;
+  } catch (e) {
+    console.error("Error decoding token:", e);
+    return true; // If there's an error decoding the token, treat it as expired for safety
+  }
+}

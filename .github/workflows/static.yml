@@ -33,6 +33,12 @@ jobs:
         uses: actions/checkout@v4
       - name: Setup Pages
         uses: actions/configure-pages@v5
+      - name: Generate production environment configuration
+        run: |
+          echo 'export const ENV = {
+            API_BACKEND_BASE_URL: "${{ vars.API_USER_URL }}",
+            API_BACKEND_TODO_BASE_URL: "${{ vars.API_TODO_URL }}"
+          };' > js/env.js
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

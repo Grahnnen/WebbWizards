@@ -68,7 +68,7 @@ async function generateDescription() {
   descError.textContent = "";
 
   try {
-    var response = await fetch(`${ENV.API_BACKEND_TODO_BASE_URL}/description`, {
+    var response = await fetch(`${ENV.API_BACKEND_TODO_BASE_URL}/api/v1/ai/description`, {
       method: "POST",
       headers: { "Content-Type": "application/json"},
       body: JSON.stringify({title: dom.inputfield.value.trim()}),

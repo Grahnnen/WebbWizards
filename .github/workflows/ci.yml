@@ -38,9 +38,19 @@ jobs:
       - name: Run linter
         run: npm run lint
       
-      # Skapa fejkad env.js för tester
-      - name: Create fake env.js
-        run: cp js/env.example.js js/env.js
+      # Skapa env.js med variables included
+      - name: Create env.js
+        run: |
+          cat > js/env.js <<EOF
+          const isLocalhost =
+          window.location.hostname === "localhost" ||
+          window.location.hostname === "127.0.0.1";
+
+          export const ENV = {
+            API_BACKEND_BASE_URL: "${{ vars.API_BACKEND_BASE_URL }}",
+            API_BACKEND_TODO_BASE_URL: "${{ vars.API_BACKEND_TODO_BASE_URL }}"
+          };
+          EOF
       
       # Kör tester
       - name: Run tests

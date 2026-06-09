@@ -79,20 +79,28 @@ Expand rows and look into the Log_s field to read real-time stack traces or runt
 
 ## Installation & Running Locally
 
-Clone the repository:
+1. Clone the repository:
 
 ```bash
 git clone https://github.com/Grahnnen/WebbWizards.git
 cd WebbWizards
 ```
 
-Install dependencies:
+2. Install dependencies:
 
 ```
 npm install
 ```
 
-Run locally:
+3. Configure Local Environment Variables: 
+Since `js/env.js`is generated dynamically during production deployment, you need to create it manually for local development so the frontend can route requests to your local backend APIs:
+* Copy the example template file: `cp js/env.example.js js/env.js`
+* Open `js/env.js` and ensure the endpoints point to your local backend ports (usually matched with your .NET launch settings).
+
+(Note: `js/env.js` is already added to `.gitignore` to prevent developers from accidentally committing local host profiles.)
+
+
+4. Run locally:
 
 ```
 npm run dev
